@@ -19,13 +19,14 @@ public class Main extends Application {
         bdd.start();
         //bdd.lire("src/BDDFilmotheque.sql");
 
+        //   bdd.lire("src/sample/BDDFilm.sql");
 
         System.out.println(bdd.ask("SELECT * FROM DVDTHEQUE.Film;").get(0).toString());
 
-       // bdd.lire("src/sample/BDDFilm.sql");
 
-       bdd.stop();
 
+
+        bdd.stop();
     }
 
 

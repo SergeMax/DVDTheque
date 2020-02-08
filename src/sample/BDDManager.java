@@ -1,8 +1,9 @@
 package sample;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.io.*;
+
 /**
  Created by cladlink on 12/03/16.
  */
@@ -58,13 +59,13 @@ public class BDDManager {
     public void edit(String requete)
     {
         System.out.println(requete);
-        try
+    //    try
         {
-            statement.executeUpdate(requete);
+    //        statement.executeUpdate(requete);
         }
-        catch (SQLException e)
+    //    catch (SQLException e)
         {
-            e.printStackTrace();
+     //       e.printStackTrace();
         }
     }
 
