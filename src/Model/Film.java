@@ -13,10 +13,11 @@ public class Film {
 
     public Film(){
          numFilm = 1;
-       nomFilm= "ziiz";
+       nomFilm= "5eme Element";
         anneeFilm = 2002;
        noteFilm =5;
-        resumeFilm ="resumeok";
+        resumeFilm ="resumeokerifkero oerpvkoeprkv oeprk porkv koper kpor kpor kpoer kpoerkpoek iojoi tok  otkrto^k rt" +
+                "ep okepo tkto kporkt^pokrt krtpo^pok rtpokoprktotkortôtr ";
         imageFilm ="klerfk";
         realisateurFilm ="oijk";
          nationaliteFilm ="okpklm";

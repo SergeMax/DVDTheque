@@ -1,8 +1,13 @@
 package View;
 
 import Controler.Controler;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -32,12 +37,17 @@ public class ViewAjoutFilm {
     private Label nation;
     private Label  adresseEmailLabel;
 
+    private final Background focusBackground = new Background( new BackgroundFill( Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
+
 
     private String adresseEmail1;
 
 
 
     private Button buttonValider;
+    private HboxFilm vboxx;
+    private VBox vboxConstruite;
+    private VBox boxFilm;
 
     public ViewAjoutFilm(Menu model, VBox vb) {
 
@@ -69,6 +79,9 @@ public class ViewAjoutFilm {
      //   setVueCompleteMenu();
 
     }
+
+
+
 
     private void initNomFilm() {
         nomFilm = new Label("Titre Film");

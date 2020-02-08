@@ -2,18 +2,28 @@ package View;
 
 import Controler.Controler;
 import Model.Film;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
+import java.util.ArrayList;
+
+import static javafx.scene.text.FontWeight.BOLD;
+
 public class ViewListFilm {
 
     private final Menu model;
+    private  VBox vBox;
     private ViewHandler viewHandler;
     private Stage primaryStage;
     private VBox root;
@@ -25,6 +35,8 @@ public class ViewListFilm {
     private Text resumeFilmT;
     private Text imageFilmT;
     private Text nomRealisateurFilm;
+    private HBox boxFilm;
+    private final Background focusBackground = new Background( new BackgroundFill( Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
 
     private Controler controler;
 
@@ -38,6 +50,13 @@ public class ViewListFilm {
     private Film filmAAfficher;
     private Text noteFilmT;
     private Text nomRealisateurFilmT;
+    private HboxFilm hboxx;
+    private String cheminCard;
+    private HBox hboxConstruite;
+    private ImageView imageFilmm;
+    private HBox hboxTitreImage;
+    private VBox vboxDescription;
+    private ArrayList<Film> tableauDesFilms = new ArrayList<>();
 
 
     public ViewListFilm(Menu model, VBox vb, Film film1) {
@@ -46,6 +65,8 @@ public class ViewListFilm {
         this.root = vb;
         this.model = model;
         this.filmAAfficher = film1;
+
+
 
         initTitrePage();
 
@@ -58,6 +79,8 @@ public class ViewListFilm {
         initRealisateurFilm();
         initNationalite();
 
+        initImage();
+
         initNomFilmLabel();
         initAnneeFilmLabel();
         initNoteFilmLabel();
@@ -67,10 +90,58 @@ public class ViewListFilm {
 
         initRealisateurLabel();
 
+        initBoxFilm("assets/image/5elem.png");
 
 
         setVueCompleteProfil();
 
+    }
+
+    public HBox initVbox(String cheminImage){
+        hboxx = new HboxFilm(cheminImage);
+        hboxConstruite = hboxx.gethBox();
+
+        return hboxConstruite;
+    }
+
+    private void initBoxFilm(String chemin){
+
+
+        boxFilm = initVbox(chemin);
+        boxFilm.setBackground(focusBackground);
+        boxFilm.setPadding(new Insets(20, 20, 20, 20));
+        boxFilm.setSpacing(20);
+        boxFilm.setTranslateY(30);
+
+
+        Font fontTitre = new Font("Sans Serif", 10 );
+        Font fontTitreFilm = new Font("Sans Serif", 30 );
+
+
+
+        nomFilm.setFont(fontTitre);
+        anneeFilm.setFont(fontTitre);
+        noteFilm.setFont(fontTitre);
+        resumeFilm.setFont(fontTitre);
+        nomRealisateur.setFont(fontTitre);
+
+        nomFilmT.setFont(fontTitreFilm);
+
+
+        vboxDescription = new VBox();
+        vboxDescription.getChildren().addAll(nomFilm, nomFilmT, anneeFilm, anneeFilmT,  nomRealisateur, nomRealisateurFilmT,  noteFilm, noteFilmT, resumeFilm, resumeFilmT);
+
+
+
+        boxFilm.getChildren().addAll( vboxDescription);
+              //, anneeFilmT, noteFilmT, resumeFilmT, imageFilmT, nomRealisateurFilmT););
+
+    }
+
+    private void initImage(){
+        imageFilmm = new ImageView("assets/image/5elem.jpg");
+        imageFilmm.setFitHeight(230);
+        imageFilmm.setFitWidth(150);
     }
 
     private void initNomFilmLabel() {
@@ -107,7 +178,8 @@ public class ViewListFilm {
 
     private void initTitrePage() {
         titrePage = new Label("Liste des Films");
-        titrePage.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
+        titrePage.setFont(Font.font("Amble CN", BOLD, 24));
+        titrePage.setTranslateX(-30);
     }
 
 
@@ -182,28 +254,9 @@ public class ViewListFilm {
         root.getChildren().clear();
         root.getChildren().add(titrePage);
 
-        root.getChildren().add(nomFilm);
-        root.getChildren().add(nomFilmT);
-
-        root.getChildren().add(anneeFilm);
-        root.getChildren().add(anneeFilmT);
-
-        // root.getChildren().add(login);
-
-        root.getChildren().add(noteFilm);
-        root.getChildren().add(noteFilmT);
+        root.getChildren().add(boxFilm);
 
 
-        root.getChildren().add(resumeFilm);
-        root.getChildren().add(resumeFilmT);
-
-        root.getChildren().add(imageFilm);
-        root.getChildren().add(imageFilmT);
-
-
-        root.getChildren().add(nomRealisateur);
-
-        root.getChildren().add(nomRealisateurFilmT);
 
 
 
