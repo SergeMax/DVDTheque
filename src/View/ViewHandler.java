@@ -2,6 +2,7 @@ package View;
 
 
 import Controler.Controler;
+import Model.Film;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,22 +18,17 @@ public class ViewHandler extends Application {
     private VBox vb;
     private Controler controlerInscr;
     private ViewAjoutFilm mi;
-    private ViewConnexion mc;
-    private ViewAffichageUtilisateur pro;
+    private ViewListFilm viewList;
     private Menu model;
     private  VBox root;
+    private VBox rootVueList;
+    private Film filmTest;
 
-    public ViewAffichageUtilisateur getPro() {
-        return pro;
+    public ViewListFilm getViewList() {
+        return viewList;
     }
 
-    public ViewConnexion getMc() {
-        return mc;
-    }
 
-    public void setMc(ViewConnexion mc) {
-        this.mc = mc;
-    }
 
     public Controler getControlerInscr() {
         return controlerInscr;
@@ -49,20 +45,30 @@ public class ViewHandler extends Application {
         this.primaryStage = primaryStage;
 
         root = new VBox();
+        rootVueList = new VBox();
+
 
         root.setPadding(new Insets(50, 50, 50, 50));
         root.setSpacing(10);
         root.setMinWidth(500);
 
-        Scene inscritpion = new Scene(root, Color.WHITE);
+        rootVueList.setPadding(new Insets(50, 50, 50, 50));
+        rootVueList.setSpacing(10);
+        rootVueList.setMinWidth(1000);
+
+
+        Scene ajoutFilm = new Scene(root, Color.WHITE);
+        Scene listFilm = new Scene(rootVueList, Color.WHITE);
+
 
         model = new Menu();
 
         mi = new ViewAjoutFilm(model, root);
-        mc = new ViewConnexion(model, root);
 
         controlerInscr = new Controler(this, model);
 
+
+        filmTest = new Film();
 
         BDDManager bdd = new BDDManager();
         bdd.start();
@@ -76,11 +82,12 @@ public class ViewHandler extends Application {
 
 
 
-        afficherInscription();
+        afficherProfil(filmTest);
 
-        primaryStage.setScene(inscritpion);
+        primaryStage.setScene(listFilm);
         primaryStage.setResizable(true);
         primaryStage.show();
+
 
     }
 
@@ -91,7 +98,6 @@ public class ViewHandler extends Application {
 
     public void setEventHandlerInscription(Controler inscr) {
         mi.setEvents(inscr);
-        mc.setEvents(inscr);
 
     }
 
@@ -100,14 +106,11 @@ public class ViewHandler extends Application {
         return mi;
     }
 
-    public void afficherConnexion() {
-        mc.setVueCompleteConnexion();
-    }
 
-    public void afficherProfil() {
-        pro = new ViewAffichageUtilisateur(model, root);
+    public void afficherProfil(Film film1) {
+        viewList = new ViewListFilm(model, rootVueList, filmTest);
 
-        pro.setVueCompleteProfil();
+        viewList.setVueCompleteProfil();
     }
 
 }

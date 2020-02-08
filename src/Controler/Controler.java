@@ -2,7 +2,7 @@ package Controler;
 
 
 
-import Model.Utilisateur;
+import Model.Film;
 import View.ViewHandler;
 import View.ViewAjoutFilm;
 import javafx.event.EventHandler;
@@ -23,9 +23,10 @@ public class Controler implements EventHandler<MouseEvent> {
     private String codePostale;
     private String ville;
     private String adresseEmail;
-    private Utilisateur utilisateur1;
+    private Film utilisateur1;
+    private Film film1;
 
-    public Utilisateur getUtilisateur1() {
+    public Film getUtilisateur1() {
         return utilisateur1;
     }
 
@@ -35,7 +36,7 @@ public class Controler implements EventHandler<MouseEvent> {
         this.viewHandler.setEventHandlerInscription(this);
     }
 
-    public Controler(ViewHandler viewHandler, Menu model, Utilisateur utilisateur1) {
+    public Controler(ViewHandler viewHandler, Menu model, Film utilisateur1) {
         this.model = model;
         this.viewHandler = viewHandler;
         this.utilisateur1 = utilisateur1;
@@ -49,27 +50,18 @@ public class Controler implements EventHandler<MouseEvent> {
         if (mouseEvent.getSource().equals(viewHandler.getMi().getButtonValider())) {
 
 
-            utilisateur1 = new Utilisateur();
+            film1 = new Film();
 
-            utilisateur1.setLogin(viewHandler.getMi().getAreaNomFilm().getText());
-            utilisateur1.setMdp(viewHandler.getMi().getAreaAnneeFilm().getText());
-            utilisateur1.setNom(viewHandler.getMi().getAreaNote().getText());
-            utilisateur1.setPrenom(viewHandler.getMi().getAreaResumeFilm().getText());
-            utilisateur1.setAdresse(viewHandler.getMi().getAreaImageFilm().getText());
-            utilisateur1.setCodePostale(viewHandler.getMi().getAreaRealisateur().getText());
-            utilisateur1.setVille(viewHandler.getMi().getVille().getText());
-            utilisateur1.setAdresseEmail(viewHandler.getMi().getAdresseEmail().getText());
+            film1.setNomFilm(viewHandler.getMi().getAreaNomFilm().getText());
+            film1.setAnneeFilm(Integer.parseInt(viewHandler.getMi().getAreaAnneeFilm().getText()));
+            film1.setNoteFilm(Integer.parseInt(viewHandler.getMi().getAreaNote().getText()));
+            film1.setResumeFilm(viewHandler.getMi().getAreaResumeFilm().getText());
+            film1.setImageFilm(viewHandler.getMi().getAreaImageFilm().getText());
+            film1.setRealisateurFilm(viewHandler.getMi().getAreaRealisateur().getText());
 
-            viewHandler.afficherConnexion();
+            viewHandler.afficherProfil(film1);
 
 
         }
 
-        if (mouseEvent.getSource().equals(viewHandler.getMc().getButtonConnexion())) {
-       //     if(utilisateur1.getLogin() ==
-         //   utilisateur1.getMdp()) {
-                viewHandler.afficherProfil();
-           // }
-
-        }
 }}
