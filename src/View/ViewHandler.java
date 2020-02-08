@@ -16,7 +16,7 @@ public class ViewHandler extends Application {
     private Stage primaryStage;
     private VBox vb;
     private Controler controlerInscr;
-    private ViewInscription mi;
+    private ViewAjoutFilm mi;
     private ViewConnexion mc;
     private ViewAffichageUtilisateur pro;
     private Menu model;
@@ -58,7 +58,7 @@ public class ViewHandler extends Application {
 
         model = new Menu();
 
-        mi = new ViewInscription(model, root);
+        mi = new ViewAjoutFilm(model, root);
         mc = new ViewConnexion(model, root);
 
         controlerInscr = new Controler(this, model);
@@ -96,7 +96,7 @@ public class ViewHandler extends Application {
     }
 
 
-    public ViewInscription getMi() {
+    public ViewAjoutFilm getMi() {
         return mi;
     }
 

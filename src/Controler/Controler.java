@@ -4,7 +4,7 @@ package Controler;
 
 import Model.Utilisateur;
 import View.ViewHandler;
-import View.ViewInscription;
+import View.ViewAjoutFilm;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 public class Controler implements EventHandler<MouseEvent> {
 
     private ViewHandler viewHandler;
-    private ViewInscription viewInscription;
+    private ViewAjoutFilm viewInscription;
     private Menu model;
     private String login;
     private PasswordField mdp;
@@ -51,12 +51,12 @@ public class Controler implements EventHandler<MouseEvent> {
 
             utilisateur1 = new Utilisateur();
 
-            utilisateur1.setLogin(viewHandler.getMi().getLogin().getText());
-            utilisateur1.setMdp(viewHandler.getMi().getMdp().getText());
-            utilisateur1.setNom(viewHandler.getMi().getNom().getText());
-            utilisateur1.setPrenom(viewHandler.getMi().getPrenom().getText());
-            utilisateur1.setAdresse(viewHandler.getMi().getAdresse().getText());
-            utilisateur1.setCodePostale(viewHandler.getMi().getCodePostale().getText());
+            utilisateur1.setLogin(viewHandler.getMi().getAreaNomFilm().getText());
+            utilisateur1.setMdp(viewHandler.getMi().getAreaAnneeFilm().getText());
+            utilisateur1.setNom(viewHandler.getMi().getAreaNote().getText());
+            utilisateur1.setPrenom(viewHandler.getMi().getAreaResumeFilm().getText());
+            utilisateur1.setAdresse(viewHandler.getMi().getAreaImageFilm().getText());
+            utilisateur1.setCodePostale(viewHandler.getMi().getAreaRealisateur().getText());
             utilisateur1.setVille(viewHandler.getMi().getVille().getText());
             utilisateur1.setAdresseEmail(viewHandler.getMi().getAdresseEmail().getText());
 
