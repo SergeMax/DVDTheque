@@ -52,3 +52,7 @@ CREATE TABLE DVDTHEQUE.Film_Genre(
         CONSTRAINT fkFilmGenre1 FOREIGN KEY (Film_id) REFERENCES Film(Id_Film),
         CONSTRAINT fkFilmGenre2 FOREIGN KEY (Genre_id) REFERENCES Genre(Id_Genre)
 );
+
+INSERT INTO DVDTHEQUE.Realisateur VALUES (1, 'pablo', 'juju');
+INSERT INTO DVDTHEQUE.Nationnalite VALUES (1, 'Francaise');
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CInquieme Element', 4444, 5, 'ferofk_elrfkeref', 'ijfokreferf', 1, 1);

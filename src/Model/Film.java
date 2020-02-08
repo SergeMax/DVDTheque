@@ -17,7 +17,7 @@ public class Film {
         anneeFilm = 2002;
        noteFilm =5;
         resumeFilm ="resumeokerifkero oerpvkoeprkv oeprk porkv koper kpor kpor kpoer kpoerkpoek iojoi tok  otkrto^k rt" +
-                "ep okepo tkto kporkt^pokrt krtpo^pok rtpokoprktotkortôtr ";
+                "ep okepo tkto kporkt^pokrt krtpo^pok rtpokoprktotkortôtr";
         imageFilm ="klerfk";
         realisateurFilm ="oijk";
          nationaliteFilm ="okpklm";

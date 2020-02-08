@@ -55,6 +55,7 @@ public class ViewHandler extends Application {
         rootVueList.setPadding(new Insets(50, 50, 50, 50));
         rootVueList.setSpacing(10);
         rootVueList.setMinWidth(1000);
+        rootVueList.setMaxHeight(800);
 
 
         Scene ajoutFilm = new Scene(root, Color.WHITE);
@@ -65,26 +66,30 @@ public class ViewHandler extends Application {
 
         mi = new ViewAjoutFilm(model, root);
 
-        controlerInscr = new Controler(this, model);
 
 
         filmTest = new Film();
 
         BDDManager bdd = new BDDManager();
+        controlerInscr = new Controler(this, model, bdd);
+
         bdd.start();
-        //bdd.lire("src/BDDFilmotheque.sql");
+       // bdd.lire("src/sample/BDDFilm.sql");
 
         System.out.println(bdd.ask("SELECT * FROM DVDTHEQUE.Film;").get(0).toString());
 
+        //bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('5eme element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/5elem.png', 1, 1);");
+        //bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('ment', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);");
+
         // bdd.lire("src/sample/BDDFilm.sql");
 
-        bdd.stop();
+       // bdd.stop();
 
 
 
-        afficherProfil(filmTest);
+       // afficherProfil(filmTest);
 
-        primaryStage.setScene(listFilm);
+        primaryStage.setScene(ajoutFilm);
         primaryStage.setResizable(true);
         primaryStage.show();
 

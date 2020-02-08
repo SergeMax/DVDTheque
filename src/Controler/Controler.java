@@ -9,6 +9,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
+import sample.BDDManager;
+
+import java.sql.SQLOutput;
 
 public class Controler implements EventHandler<MouseEvent> {
 
@@ -24,16 +27,18 @@ public class Controler implements EventHandler<MouseEvent> {
     private String ville;
     private String adresseEmail;
     private Film utilisateur1;
-    private Film film1;
+
+    private BDDManager bdd;
 
     public Film getUtilisateur1() {
         return utilisateur1;
     }
 
-    public Controler(ViewHandler viewHandler, Menu model) {
+    public Controler(ViewHandler viewHandler, Menu model, BDDManager bdd) {
         this.model = model;
         this.viewHandler = viewHandler;
         this.viewHandler.setEventHandlerInscription(this);
+        this.bdd = bdd;
     }
 
     public Controler(ViewHandler viewHandler, Menu model, Film utilisateur1) {
@@ -50,7 +55,7 @@ public class Controler implements EventHandler<MouseEvent> {
         if (mouseEvent.getSource().equals(viewHandler.getMi().getButtonValider())) {
 
 
-            film1 = new Film();
+            Film film1 = new Film();
 
             film1.setNomFilm(viewHandler.getMi().getAreaNomFilm().getText());
             film1.setAnneeFilm(Integer.parseInt(viewHandler.getMi().getAreaAnneeFilm().getText()));
@@ -58,6 +63,23 @@ public class Controler implements EventHandler<MouseEvent> {
             film1.setResumeFilm(viewHandler.getMi().getAreaResumeFilm().getText());
             film1.setImageFilm(viewHandler.getMi().getAreaImageFilm().getText());
             film1.setRealisateurFilm(viewHandler.getMi().getAreaRealisateur().getText());
+            film1.setNationaliteFilm(viewHandler.getMi().getNationaliteFilm().getText());
+
+
+
+            String requete = "INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) " +
+                    "VALUES ('"+ film1.getNomFilm() +"', "
+                    + film1.getAnneeFilm() +","
+                    + film1.getNoteFilm() +", '"
+                    + film1.getResumeFilm()+"', '"
+                    + film1.getImageFilm() +"',"
+                    + film1.getRealisateurFilm() +","
+                    + film1.getNationaliteFilm() +");";
+            System.out.println(requete);
+
+
+            bdd.edit(requete);
+
 
             viewHandler.afficherProfil(film1);
 

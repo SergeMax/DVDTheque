@@ -20,7 +20,7 @@ public class ViewAjoutFilm {
     private VBox root;
     private Label titreFormulaire ;
     private TextField areaNomFilm;
-    private PasswordField areaAnneeFilm;
+    private TextField areaAnneeFilm;
     private TextField areaNote;
     private TextField areaResumeFilm;
     private TextField areaImageFilm;
@@ -48,6 +48,8 @@ public class ViewAjoutFilm {
     private HboxFilm vboxx;
     private VBox vboxConstruite;
     private VBox boxFilm;
+    private Label nationaliteFilm;
+    private TextField areaNationalite;
 
     public ViewAjoutFilm(Menu model, VBox vb) {
 
@@ -61,6 +63,7 @@ public class ViewAjoutFilm {
         initAreaResumeFilm();
         initAreaImageFilm();
         initAreaRealisateur();
+        initAreaNationalite();
         initButtonValider();
 
         initNomFilm();
@@ -69,10 +72,14 @@ public class ViewAjoutFilm {
         initResumeFilm();
         initImageFilm();
         initRealisateur();
+        initNationalite();
 
 
 
         setVueCompleteInscription();
+
+        //bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('ment', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);");
+
 
         //  initListeImage();
         // initVaisseauxCoin();
@@ -113,6 +120,11 @@ public class ViewAjoutFilm {
         nomRealisateur.setFont(Font.font("Amble CN", 15));
     }
 
+    private void initNationalite() {
+        nationaliteFilm = new Label("Nationalite");
+        nationaliteFilm.setFont(Font.font("Amble CN", 15));
+    }
+
 
 
 
@@ -129,7 +141,7 @@ public class ViewAjoutFilm {
     }
 
     private void initAreaAnneeFilm() {
-        areaAnneeFilm = new PasswordField();
+        areaAnneeFilm = new TextField();
         areaAnneeFilm.setMinWidth(120);
     }
 
@@ -146,7 +158,7 @@ public class ViewAjoutFilm {
     }
 
     private void initAreaImageFilm() {
-        areaImageFilm = new TextField("");
+        areaImageFilm = new TextField("deplacer votre image ici");
         areaImageFilm.setMinWidth(120);
 
     }
@@ -155,6 +167,13 @@ public class ViewAjoutFilm {
 
         areaRealisateur = new TextField("");
         areaRealisateur.setMinWidth(120);
+
+    }
+
+    private void initAreaNationalite() {
+
+        areaNationalite = new TextField("");
+        areaNationalite.setMinWidth(120);
 
     }
 
@@ -187,7 +206,8 @@ public class ViewAjoutFilm {
         root.getChildren().add(nomRealisateur);
         root.getChildren().add(areaRealisateur);
 
-
+        root.getChildren().add(nationaliteFilm);
+        root.getChildren().add(areaNationalite);
 
 
 
@@ -210,7 +230,7 @@ public class ViewAjoutFilm {
         return areaNomFilm;
     }
 
-    public PasswordField getAreaAnneeFilm() {
+    public TextField getAreaAnneeFilm() {
         return areaAnneeFilm;
     }
 
@@ -230,12 +250,7 @@ public class ViewAjoutFilm {
         return areaRealisateur;
     }
 
-    public TextField getVille() {
-        return ville;
+    public TextField getNationaliteFilm() {
+        return areaNationalite;
     }
-
-    public TextField getAdresseEmail() {
-        return adresseEmail;
-    }
-
 }

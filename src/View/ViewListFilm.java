@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -23,6 +24,8 @@ import static javafx.scene.text.FontWeight.BOLD;
 public class ViewListFilm {
 
     private final Menu model;
+    private final VBox vboxListe;
+    private final ScrollPane scroll;
     private  VBox vBox;
     private ViewHandler viewHandler;
     private Stage primaryStage;
@@ -90,7 +93,28 @@ public class ViewListFilm {
 
         initRealisateurLabel();
 
-        initBoxFilm("assets/image/5elem.png");
+        vboxListe = new VBox();
+        vboxListe.maxHeight(600);
+        vboxListe.minWidth(950);
+
+
+        vboxListe.setSpacing(20);
+
+
+        scroll = new ScrollPane();
+        scroll.setContent(vboxListe);
+
+
+
+        for (int i =0; i<5; i++){
+
+           HBox hbox = initBoxFilm("assets/image/5elem.png");
+
+            vboxListe.getChildren().add(hbox);
+
+        }
+
+
 
 
         setVueCompleteProfil();
@@ -104,7 +128,7 @@ public class ViewListFilm {
         return hboxConstruite;
     }
 
-    private void initBoxFilm(String chemin){
+    private HBox initBoxFilm(String chemin){
 
 
         boxFilm = initVbox(chemin);
@@ -136,6 +160,7 @@ public class ViewListFilm {
         boxFilm.getChildren().addAll( vboxDescription);
               //, anneeFilmT, noteFilmT, resumeFilmT, imageFilmT, nomRealisateurFilmT););
 
+        return boxFilm;
     }
 
     private void initImage(){
@@ -254,7 +279,9 @@ public class ViewListFilm {
         root.getChildren().clear();
         root.getChildren().add(titrePage);
 
-        root.getChildren().add(boxFilm);
+        root.getChildren().add(vboxListe);
+        root.getChildren().add(scroll);
+
 
 
 

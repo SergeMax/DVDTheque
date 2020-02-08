@@ -59,13 +59,13 @@ public class BDDManager {
     public void edit(String requete)
     {
         System.out.println(requete);
-    //    try
+       try
         {
-    //        statement.executeUpdate(requete);
+            statement.executeUpdate(requete);
         }
-    //    catch (SQLException e)
+        catch (SQLException e)
         {
-     //       e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
