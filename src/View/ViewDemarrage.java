@@ -42,9 +42,9 @@ public class ViewDemarrage {
 
 
             buttonDemarer = new Button();
-            buttonDemarer.setText("Ajouter Film");
+            buttonDemarer.setText("START DVDTHEQUE");
             buttonDemarer.setTranslateY(550);
-        buttonDemarer.setTranslateX(530);
+            buttonDemarer.setTranslateX(530);
 
         //  buttonAjouterFilm.setTranslateY();
 

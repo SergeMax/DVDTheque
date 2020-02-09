@@ -115,7 +115,7 @@ public class ViewHandler extends Application {
 
         tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
 
-        System.out.println(tabListFilm);
+     //   System.out.println(tabListFilm);
         for (int i = 0; i< tabListFilmLongueur-1; i++){
 
 
@@ -124,10 +124,10 @@ public class ViewHandler extends Application {
         controlerInscr = new Controler(this, model, bdd, root, tabListFilm);
 
 
-        //bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('5eme element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/5elem.png', 1, 1);");
-        //bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('ment', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);");
+       // bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('5eme element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/5elem.png', 1, 1);");
+     //   bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('ment', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);");
 
-        // bdd.lire("src/sample/BDDFilm.sql");
+        //bdd.lire("src/sample/BDDFilm.sql");
 
        // bdd.stop();
 
@@ -158,9 +158,8 @@ public class ViewHandler extends Application {
 
     public void setEventHandlerAjoutFilm(Controler ajout) {
         viewAjoutFilm.setEvents(ajout);
-        viewList.setEvents(ajout);
         viewDemarrage.setEvents(ajout);
-
+viewList.setEvents(ajout);
     }
 
 
@@ -172,7 +171,10 @@ public class ViewHandler extends Application {
     public void afficherViewList(Film film1, ArrayList<ArrayList<String>> tabListFilm) {
 
         viewList.init();
+
         viewList.setVueListFilm();
+
+        setEventHandlerAjoutFilm(controlerInscr);
 
         primaryStage.setScene(listFilm);
 

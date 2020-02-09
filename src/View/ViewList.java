@@ -33,7 +33,6 @@ public class ViewList {
     private Text resumeFilmT;
     private Text imageFilmT;
     private Text nomRealisateurFilm;
-    private final Background focusBackground = new Background( new BackgroundFill( Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
 
     private Controler controler;
 
@@ -52,10 +51,12 @@ public class ViewList {
     private ArrayList<Film> tableauDesFilms = new ArrayList<>();
     private Button buttonAjouterFilm;
     private ImageView imageDvd;
+    private ArrayList<Button> tableauBtnSupprimer= new ArrayList<>();
+
 
 
     public ViewList(Menu model, VBox vb, Film film1) {
-        System.out.println("constructeur liste film ok");
+      //  System.out.println("constructeur liste film ok");
         filmAAfficher = new Film();
         this.root = vb;
         this.model = model;
@@ -66,6 +67,8 @@ public class ViewList {
         initTitrePage();
         initImageDvd();
         //initLogin();
+
+
 
         initButtonAjouterFilm();
 
@@ -109,6 +112,8 @@ public class ViewList {
         VBox vboxListe = new VBox();
         vboxListe.setSpacing(20);
 
+        tableauBtnSupprimer.clear();
+
         for (int i=0; i<tabListFilm.size(); i++){
 
 
@@ -128,7 +133,7 @@ public class ViewList {
             initRealisateurFilm(tabListFilm.get(i).get(6));
             initNationalite(tabListFilm.get(i).get(7));
 
-            System.out.println(tabListFilm.get(1).get(5));
+           // System.out.println(tabListFilm.get(1).get(5));
             HBox hbox = initBoxFilm(tabListFilm.get(i).get(5));
 
 
@@ -165,6 +170,10 @@ public class ViewList {
 
     }
 
+    public ArrayList<Button> getTableauBtnSupprimer() {
+        return tableauBtnSupprimer;
+    }
+
     public Button getButtonAjouterFilm() {
         return buttonAjouterFilm;
     }
@@ -172,24 +181,41 @@ public class ViewList {
     public void setEvents(Controler ajout) {
         buttonAjouterFilm.setOnMouseClicked(ajout);
 
+        System.out.println(tableauBtnSupprimer);
+        for (int i =0; i<tableauBtnSupprimer.size(); i++) {
+            tableauBtnSupprimer.get(i).setOnMouseClicked(ajout);
+        }
     }
 
     private HBox initBoxFilm(String chemin){
 
+        HboxFilm boxFilm = new HboxFilm(chemin);
+        HBox hboxConstruite = boxFilm.gethBox();
 
-        HBox boxFilm = initVbox(chemin);
-        boxFilm.setBackground(focusBackground);
-        boxFilm.setPadding(new Insets(20, 20, 20, 20));
-        boxFilm.setSpacing(20);
-        boxFilm.setTranslateY(0);
-        boxFilm.setMaxWidth(800);
-        boxFilm.setMinWidth(800);
+
 
 
         Font fontTitre = new Font("Sans Serif", 10 );
         Font fontTitreFilm = new Font("Sans Serif", 30 );
 
+        Button buttonEditer = new Button();
+        buttonEditer.setText("Editer");
+        buttonEditer.setTranslateX(460);
+        buttonEditer.setTranslateY(-34);
 
+
+        Button buttonSupprimer = new Button();
+        buttonSupprimer.setText("Supprimer");
+        buttonSupprimer.setTranslateX(520);
+        buttonSupprimer.setTranslateY(-60);
+
+        tableauBtnSupprimer.add(buttonSupprimer);
+
+        ImageView play = new ImageView("assets/image/play.png");
+
+        play.setFitWidth(70);
+        play.setTranslateY(-12);
+        play.setPreserveRatio(true);
 
         nomFilm.setFont(fontTitre);
         anneeFilm.setFont(fontTitre);
@@ -198,6 +224,9 @@ public class ViewList {
         nomRealisateur.setFont(fontTitre);
 
         nomFilmT.setFont(fontTitreFilm);
+
+        anneeFilmT.setTranslateY(2);
+
 
         nomRealisateur.setTranslateX(50);
         nomRealisateur.setTranslateY(-31);
@@ -215,14 +244,12 @@ public class ViewList {
         resumeFilmT.setTranslateY(-40);
 
         VBox vboxDescription = new VBox();
-        vboxDescription.getChildren().addAll(nomFilm, nomFilmT, anneeFilm, anneeFilmT,  nomRealisateur, nomRealisateurFilmT,  noteFilm, noteFilmT, resumeFilm, resumeFilmT);
+        vboxDescription.getChildren().addAll(nomFilm, nomFilmT, anneeFilm, anneeFilmT,  nomRealisateur, nomRealisateurFilmT,  noteFilm, noteFilmT, resumeFilm, resumeFilmT, play, buttonEditer, buttonSupprimer);
 
-
-
-        boxFilm.getChildren().addAll( vboxDescription);
+        hboxConstruite.getChildren().addAll( vboxDescription);
               //, anneeFilmT, noteFilmT, resumeFilmT, imageFilmT, nomRealisateurFilmT););
 
-        return boxFilm;
+        return hboxConstruite ;
     }
 
     private void initImage(){

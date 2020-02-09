@@ -59,7 +59,7 @@ public class BDDManager {
      */
     public boolean edit(String requete)
     {
-        System.out.println(requete);
+      //  System.out.println(requete);
        try
         {
             statement.executeUpdate(requete);
@@ -81,7 +81,7 @@ public class BDDManager {
      */
     public ArrayList<ArrayList<String>> ask(String requete)
     {
-        System.out.println(requete);
+      //  System.out.println(requete);
         ArrayList<ArrayList<String>> select = new ArrayList<>();
 
         try

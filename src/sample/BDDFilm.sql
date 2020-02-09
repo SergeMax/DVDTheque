@@ -55,4 +55,15 @@ CREATE TABLE DVDTHEQUE.Film_Genre(
 
 INSERT INTO DVDTHEQUE.Realisateur VALUES (1, 'pablo', 'juju');
 INSERT INTO DVDTHEQUE.Nationnalite VALUES (1, 'Francaise');
-INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CInquieme Element', 4444, 5, 'ferofk_elrfkeref', 'ijfokreferf', 1, 1);
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CInquieme Element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/roro.png', 1, 1);
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('vvvvv', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('Ctefzerz', 4444, 5, 'ferofk_elrfkeref', 'assets/image/titanic.png', 1, 1);
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('lement', 4444, 5, 'ferofk_elrfkeref', 'assets/image/terre.png', 1, 1);
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('C Elt', 4444, 5, 'ferofk_elrfkeref', 'assets/image/titanic.png', 1, 1);
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CIieme Element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);
