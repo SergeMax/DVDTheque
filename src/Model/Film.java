@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Film {
 
     private Integer numFilm;
@@ -10,6 +12,8 @@ public class Film {
     private String imageFilm;
     private String realisateurFilm;
     private String nationaliteFilm;
+    private ArrayList<ArrayList<String>> tabListFilm;
+
 
     public Film(){
          numFilm = 1;
@@ -23,7 +27,7 @@ public class Film {
          nationaliteFilm ="okpklm";
     }
 
-    public Film(int numFilm, String nomFilm, int anneeFilm, int noteFilm, String resumeFilm, String imageFilm, String realisateurFilm, String nationaliteFilm) {
+    public Film(int numFilm, String nomFilm, int anneeFilm, int noteFilm, String resumeFilm, String imageFilm, String realisateurFilm, String nationaliteFilm, ArrayList<ArrayList<String>> tabListFilm) {
         this.numFilm = numFilm;
         this.nomFilm = nomFilm;
         this.anneeFilm = anneeFilm;
@@ -32,6 +36,7 @@ public class Film {
         this.imageFilm = imageFilm;
         this.realisateurFilm = realisateurFilm;
         this.nationaliteFilm = nationaliteFilm;
+        this.tabListFilm = tabListFilm;
     }
 
     public Integer getNumFilm() {
@@ -44,6 +49,14 @@ public class Film {
 
     public String getNomFilm() {
         return nomFilm;
+    }
+
+    public ArrayList<ArrayList<String>> getTabListFilm() {
+        return tabListFilm;
+    }
+
+    public void setTabListFilm(ArrayList<ArrayList<String>> tabListFilm) {
+        this.tabListFilm = tabListFilm;
     }
 
     public void setNomFilm(String nomFilm) {

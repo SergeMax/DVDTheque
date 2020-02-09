@@ -11,6 +11,7 @@ public class HboxFilm {
     private ImageView imageViewBack;
 
     public HboxFilm(String image){
+        System.out.println(image);
         imageFilm = new ImageView(image);
 
         imageFilm.setFitWidth(150);

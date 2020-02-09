@@ -10,7 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
+
 
 
 public class ViewAjoutFilm {
@@ -50,6 +53,10 @@ public class ViewAjoutFilm {
     private VBox boxFilm;
     private Label nationaliteFilm;
     private TextField areaNationalite;
+    private Text filmAjoute;
+    private Button buttonRetourListe;
+    private ImageView imgDvd;
+    private ImageView imageDvd;
 
     public ViewAjoutFilm(Menu model, VBox vb) {
 
@@ -65,6 +72,9 @@ public class ViewAjoutFilm {
         initAreaRealisateur();
         initAreaNationalite();
         initButtonValider();
+        initButtonRetourListe();
+        initImageDvd();
+
 
         initNomFilm();
         initAnneeFilm();
@@ -89,6 +99,14 @@ public class ViewAjoutFilm {
 
 
 
+    private void initImageDvd() {
+        imageDvd = new ImageView("assets/image/DVD.png");
+        imageDvd.setPreserveRatio(true);
+        imageDvd.setFitHeight(50);
+        imageDvd.setTranslateX(420);
+
+
+    }
 
     private void initNomFilm() {
         nomFilm = new Label("Titre Film");
@@ -177,14 +195,30 @@ public class ViewAjoutFilm {
 
     }
 
+    public void initTextFilmBienAjoute() {
+
+        filmAjoute = new Text("Film bien ajouté!");
+       }
+
     private void initButtonValider() {
         buttonValider = new Button();
         buttonValider.setText("Ajouter le film");
 
     }
 
+    private void initButtonRetourListe() {
+        buttonRetourListe = new Button();
+        buttonRetourListe.setText("Retour a la liste");
+        buttonRetourListe.setTranslateX(800);
+        buttonRetourListe.setTranslateY(-35);
+
+    }
+
     public void setVueCompleteInscription() {
         root.getChildren().clear();
+
+        root.getChildren().add(imageDvd);
+
         root.getChildren().add(titreFormulaire);
 
         root.getChildren().add(nomFilm);
@@ -212,10 +246,14 @@ public class ViewAjoutFilm {
 
 
         root.getChildren().add(buttonValider);
+        root.getChildren().add(buttonRetourListe);
+
+
     }
 
-    public void setEvents(Controler inscr) {
-        buttonValider.setOnMouseClicked(inscr);
+    public void setEvents(Controler ajout) {
+        buttonValider.setOnMouseClicked(ajout);
+        buttonRetourListe.setOnMouseClicked(ajout);
 
     }
 
@@ -252,5 +290,9 @@ public class ViewAjoutFilm {
 
     public TextField getNationaliteFilm() {
         return areaNationalite;
+    }
+
+    public Button getButtonRetourListe() {
+        return buttonRetourListe;
     }
 }

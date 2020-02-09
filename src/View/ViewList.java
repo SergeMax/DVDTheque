@@ -3,28 +3,23 @@ package View;
 import Controler.Controler;
 import Model.Film;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.swing.*;
+import sample.BDDManager;
 
 import java.util.ArrayList;
 
 import static javafx.scene.text.FontWeight.BOLD;
 
-public class ViewListFilm {
+public class ViewList {
 
     private final Menu model;
-    private final VBox vboxListe;
+
     private final ScrollPane scroll;
     private  VBox vBox;
     private ViewHandler viewHandler;
@@ -38,8 +33,7 @@ public class ViewListFilm {
     private Text resumeFilmT;
     private Text imageFilmT;
     private Text nomRealisateurFilm;
-    private HBox boxFilm;
-    private final Background focusBackground = new Background( new BackgroundFill( Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
+    private final Background focusBackground = new Background( new BackgroundFill( Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
 
     private Controler controler;
 
@@ -53,16 +47,14 @@ public class ViewListFilm {
     private Film filmAAfficher;
     private Text noteFilmT;
     private Text nomRealisateurFilmT;
-    private HboxFilm hboxx;
     private String cheminCard;
-    private HBox hboxConstruite;
     private ImageView imageFilmm;
-    private HBox hboxTitreImage;
-    private VBox vboxDescription;
     private ArrayList<Film> tableauDesFilms = new ArrayList<>();
+    private Button buttonAjouterFilm;
+    private ImageView imageDvd;
 
 
-    public ViewListFilm(Menu model, VBox vb, Film film1) {
+    public ViewList(Menu model, VBox vb, Film film1) {
         System.out.println("constructeur liste film ok");
         filmAAfficher = new Film();
         this.root = vb;
@@ -72,28 +64,13 @@ public class ViewListFilm {
 
 
         initTitrePage();
-
+        initImageDvd();
         //initLogin();
-        initNomFilm();
-        initAnneeFilm();
-        initResumeFilm();
-        initNoteFilm();
-        initImageFilm();
-        initRealisateurFilm();
-        initNationalite();
 
-        initImage();
+        initButtonAjouterFilm();
 
-        initNomFilmLabel();
-        initAnneeFilmLabel();
-        initNoteFilmLabel();
-        initResumeFilmLabel();
-        initImageLabel();
-        initRealisateurLabel();
 
-        initRealisateurLabel();
-
-        vboxListe = new VBox();
+        VBox vboxListe = new VBox();
         vboxListe.maxHeight(600);
         vboxListe.minWidth(950);
 
@@ -102,40 +79,111 @@ public class ViewListFilm {
 
 
         scroll = new ScrollPane();
+        scroll.setContent(null);
         scroll.setContent(vboxListe);
 
+        setVueListFilm();
+
+    }
+
+    private void initImageDvd() {
+        imageDvd = new ImageView("assets/image/DVD.png");
+        imageDvd.setPreserveRatio(true);
+        imageDvd.setFitHeight(50);
+        imageDvd.setTranslateX(420);
 
 
-        for (int i =0; i<5; i++){
+    }
 
-           HBox hbox = initBoxFilm("assets/image/5elem.png");
+    public void init(){
+
+        BDDManager bdd = new BDDManager();
+
+        bdd.start();
+        // bdd.lire("src/sample/BDDFilm.sql");
+
+        //  tabListFilmLongueur =  bdd.ask("SELECT * FROM DVDTHEQUE.Film;").size();
+
+        ArrayList<ArrayList<String>> tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
+
+        VBox vboxListe = new VBox();
+        vboxListe.setSpacing(20);
+
+        for (int i=0; i<tabListFilm.size(); i++){
+
+
+            initNomFilmLabel();
+            initAnneeFilmLabel();
+            initNoteFilmLabel();
+            initResumeFilmLabel();
+            initImageLabel();
+            initRealisateurLabel();
+
+
+            initNomFilm(tabListFilm.get(i).get(1));
+            initAnneeFilm(tabListFilm.get(i).get(2));
+            initResumeFilm(tabListFilm.get(i).get(3));
+            initNoteFilm(tabListFilm.get(i).get(4));
+
+            initRealisateurFilm(tabListFilm.get(i).get(6));
+            initNationalite(tabListFilm.get(i).get(7));
+
+            System.out.println(tabListFilm.get(1).get(5));
+            HBox hbox = initBoxFilm(tabListFilm.get(i).get(5));
+
 
             vboxListe.getChildren().add(hbox);
 
         }
 
+        scroll.setContent(null);
+
+        scroll.setContent(vboxListe);
+
+        setVueListFilm();
+        //root.getChildren().clear();
+        //setVueListFilm();
 
 
 
-        setVueCompleteProfil();
+
 
     }
 
     public HBox initVbox(String cheminImage){
-        hboxx = new HboxFilm(cheminImage);
-        hboxConstruite = hboxx.gethBox();
+       HboxFilm hboxx = new HboxFilm(cheminImage);
+        HBox hboxConstruite = hboxx.gethBox();
 
         return hboxConstruite;
+    }
+
+    private void initButtonAjouterFilm() {
+        buttonAjouterFilm = new Button();
+        buttonAjouterFilm.setText("Ajouter Film");
+        buttonAjouterFilm.setTranslateX(830);
+      //  buttonAjouterFilm.setTranslateY();
+
+    }
+
+    public Button getButtonAjouterFilm() {
+        return buttonAjouterFilm;
+    }
+
+    public void setEvents(Controler ajout) {
+        buttonAjouterFilm.setOnMouseClicked(ajout);
+
     }
 
     private HBox initBoxFilm(String chemin){
 
 
-        boxFilm = initVbox(chemin);
+        HBox boxFilm = initVbox(chemin);
         boxFilm.setBackground(focusBackground);
         boxFilm.setPadding(new Insets(20, 20, 20, 20));
         boxFilm.setSpacing(20);
-        boxFilm.setTranslateY(30);
+        boxFilm.setTranslateY(0);
+        boxFilm.setMaxWidth(800);
+        boxFilm.setMinWidth(800);
 
 
         Font fontTitre = new Font("Sans Serif", 10 );
@@ -151,8 +199,22 @@ public class ViewListFilm {
 
         nomFilmT.setFont(fontTitreFilm);
 
+        nomRealisateur.setTranslateX(50);
+        nomRealisateur.setTranslateY(-31);
 
-        vboxDescription = new VBox();
+        nomRealisateurFilmT.setTranslateX(52);
+        nomRealisateurFilmT.setTranslateY(-30);
+
+        noteFilm.setTranslateX(120);
+        noteFilm.setTranslateY(-62);
+
+        noteFilmT.setTranslateX(120);
+        noteFilmT.setTranslateY(-60);
+
+        resumeFilm.setTranslateY(-40);
+        resumeFilmT.setTranslateY(-40);
+
+        VBox vboxDescription = new VBox();
         vboxDescription.getChildren().addAll(nomFilm, nomFilmT, anneeFilm, anneeFilmT,  nomRealisateur, nomRealisateurFilmT,  noteFilm, noteFilmT, resumeFilm, resumeFilmT);
 
 
@@ -214,25 +276,26 @@ public class ViewListFilm {
    // }
 
 
-    private void initNomFilm() {
-            nomFilmT = new Text(filmAAfficher.getNomFilm());
+    private void initNomFilm(String s) {
+            nomFilmT = new Text(s);
     }
 
-    private void initAnneeFilm() {
+    private void initAnneeFilm(String s) {
 
             anneeFilmT = new Text(""+filmAAfficher.getAnneeFilm());
 
     }
 
-    private void initNoteFilm() {
+    private void initNoteFilm(String s) {
 
         noteFilmT = new Text(""+filmAAfficher.getNoteFilm());
 
     }
 
-    private void initResumeFilm() {
+    private void initResumeFilm(String s) {
 
             resumeFilmT = new Text(filmAAfficher.getResumeFilm());
+            resumeFilmT.setWrappingWidth(600);
 
     }
 
@@ -242,14 +305,14 @@ public class ViewListFilm {
 
     }
 
-    private void initRealisateurFilm() {
+    private void initRealisateurFilm(String s) {
 
             nomRealisateurFilmT = new Text(filmAAfficher.getRealisateurFilm());
 
 
     }
 
-    private void initNationalite() {
+    private void initNationalite(String s) {
 
             //adresseEmail = new Text(filmAAfficher.getAdresseEmail());
 
@@ -272,20 +335,17 @@ public class ViewListFilm {
 */
 
 
-    public void setVueCompleteProfil() {
-
-
+    public void setVueListFilm() {
 
         root.getChildren().clear();
+        root.getChildren().add(imageDvd);
+
         root.getChildren().add(titrePage);
+        root.getChildren().add(buttonAjouterFilm);
 
-        root.getChildren().add(vboxListe);
+
+        //root.getChildren().add(vboxListe);
         root.getChildren().add(scroll);
-
-
-
-
-
 
     }
     }

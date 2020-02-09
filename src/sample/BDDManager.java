@@ -55,18 +55,22 @@ public class BDDManager {
      * edit
      * Sert pour l'envoie de toutes requêtes sauf les SELECT
      * @param requete ()
+     * @return
      */
-    public void edit(String requete)
+    public boolean edit(String requete)
     {
         System.out.println(requete);
        try
         {
             statement.executeUpdate(requete);
+            return true;
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+
         }
+        return false;
     }
 
     /**
