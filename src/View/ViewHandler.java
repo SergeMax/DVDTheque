@@ -69,20 +69,21 @@ public class ViewHandler extends Application {
 
 
 
+
         root.setPadding(new Insets(50, 150, 50, 150));
         root.setSpacing(10);
         root.setMinWidth(1200);
         root.setMaxWidth(1200);
-        root.setMinHeight(800);
+        root.setMinHeight(900);
 
-        root.setMaxHeight(800);
+        root.setMaxHeight(900);
 
         rootVueList.setPadding(new Insets(50, 150, 50, 150));
         rootVueList.setSpacing(10);
         rootVueList.setMinWidth(1200);
         rootVueList.setMaxWidth(1200);
-        rootVueList.setMaxHeight(800);
-        rootVueList.setMinHeight(800);
+        rootVueList.setMaxHeight(900);
+        rootVueList.setMinHeight(900);
 
 
 
@@ -90,6 +91,8 @@ public class ViewHandler extends Application {
         ajoutFilm = new Scene(root, Color.WHITE);
         listFilm = new Scene(rootVueList, Color.WHITE);
         demarage = new Scene(rootVueDemmarage, Color.WHITE);
+
+
 
         filmTest = new Film();
 
@@ -149,6 +152,7 @@ public class ViewHandler extends Application {
 
        // primaryStage.setScene(demarage);
         primaryStage.setResizable(true);
+       // primaryStage.setFullScreen(true);
         primaryStage.show();
 
 

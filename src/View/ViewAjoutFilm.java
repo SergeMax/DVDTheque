@@ -11,9 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 
 
 public class ViewAjoutFilm {
@@ -26,7 +29,7 @@ public class ViewAjoutFilm {
     private TextField areaAnneeFilm;
     private TextField areaNote;
     private TextField areaResumeFilm;
-    private TextField areaImageFilm;
+    private Button areaImageFilm;
     private TextField areaRealisateur;
     private TextField ville;
     private TextField adresseEmail;
@@ -57,6 +60,13 @@ public class ViewAjoutFilm {
     private Button buttonRetourListe;
     private ImageView imgDvd;
     private ImageView imageDvd;
+    private FileChooser directoryRef;
+
+    public String getCheminFIchier() {
+        return cheminFIchier;
+    }
+
+    private String cheminFIchier;
 
     public Label getTitreFormulaire() {
         return titreFormulaire;
@@ -79,6 +89,7 @@ public class ViewAjoutFilm {
         initAreaImageFilm();
         initAreaRealisateur();
         initAreaNationalite();
+        initButtionDirectory();
         initButtonValider();
         initButtonRetourListe();
         initImageDvd();
@@ -182,11 +193,53 @@ public class ViewAjoutFilm {
         areaResumeFilm.setMinWidth(120);
         areaResumeFilm.setMinHeight(130);
 
+
+    }
+
+
+    private void initButtionDirectory(){
+
+        areaImageFilm = new Button("Chercher l'image.");
+
+        areaImageFilm.setMinWidth(100);
+        areaImageFilm.setOnMouseClicked((e) -> {
+
+
+       initAreaImageFilm();
+
+            directoryRef = new FileChooser();
+
+            directoryRef.setInitialDirectory(new File("C:/Projet Java/DVDTheque/src/assets/image"));
+
+            File file = directoryRef.showOpenDialog(primaryStage);
+            cheminFIchier = file.getPath();
+
+            cheminFIchier = System. getProperty("user.dir");
+
+            System.out.println(cheminFIchier);
+
+            cheminFIchier = new File(cheminFIchier).toURI().relativize(file.toURI()).getPath();
+
+            cheminFIchier = cheminFIchier.replace("src/", "");
+            areaImageFilm.setText(cheminFIchier);
+
+
+            System.out.println(cheminFIchier);
+        });
+        // areaImageFilm.setMinWidth(120);
     }
 
     private void initAreaImageFilm() {
-        areaImageFilm = new TextField("deplacer votre image ici");
-        areaImageFilm.setMinWidth(120);
+     //   areaImageFilm = new TextField("deplacer votre image ici");
+       // areaImageFilm.setMinWidth(120);
+
+
+
+
+
+
+
+      //  System.out.println(selectedDirectory);
 
     }
 
@@ -289,7 +342,7 @@ public class ViewAjoutFilm {
         return areaResumeFilm;
     }
 
-    public TextField getAreaImageFilm() {
+    public Button getAreaImageFilm() {
         return areaImageFilm;
     }
 

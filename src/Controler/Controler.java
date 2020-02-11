@@ -87,7 +87,7 @@ root.getChildren().remove(filmAjoute);
                 film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
                 film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
                 film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
-                film1.setImageFilm(viewHandler.getViewAjoutFilm().getAreaImageFilm().getText());
+                film1.setImageFilm(viewHandler.getViewAjoutFilm().getCheminFIchier());
                 film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
@@ -114,6 +114,7 @@ root.getChildren().remove(filmAjoute);
 
                 viewHandler.afficherAjoutFilm();
                 root.getChildren().add(filmAjoute);
+                sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
                 if (succes == true) {
                     filmAjoute.setText("Film bien ajouté ! ");
@@ -122,6 +123,7 @@ root.getChildren().remove(filmAjoute);
                 } else {
                     filmAjoute.setText("Erreur ! ");
                 }
+                sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
             }else{
 
@@ -134,7 +136,7 @@ root.getChildren().remove(filmAjoute);
                 film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
                 film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
                 film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
-                film1.setImageFilm(viewHandler.getViewAjoutFilm().getAreaImageFilm().getText());
+                film1.setImageFilm(viewHandler.getViewAjoutFilm().getCheminFIchier());
                 film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
@@ -159,6 +161,7 @@ root.getChildren().remove(filmAjoute);
 
 
                 Boolean succes = bdd.edit(requete);
+
 
 
 
@@ -191,6 +194,7 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
 
                 modeModif= false;
+                sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
             }
 
         }
