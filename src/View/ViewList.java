@@ -3,16 +3,24 @@ package View;
 import Controler.Controler;
 import Model.Film;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import sample.BDDManager;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static javafx.scene.text.FontWeight.BOLD;
 
@@ -52,7 +60,25 @@ public class ViewList {
     private Button buttonAjouterFilm;
     private ImageView imageDvd;
     private ArrayList<Button> tableauBtnSupprimer= new ArrayList<>();
+    private ArrayList<Button> tableauBtnEditer = new ArrayList<>();;
+    private Label genre;
+    private ArrayList<ArrayList<String>> tabgenreString;
+    private BDDManager bdd;
+    private Text genreT;
 
+    public ArrayList<ArrayList<String>> getTabListFilm() {
+        return tabListFilm;
+    }
+
+    public ArrayList<Button> getTableauBtnEditer() {
+        return tableauBtnEditer;
+    }
+
+    public void setTableauBtnEditer(ArrayList<Button> tableauBtnEditer) {
+        this.tableauBtnEditer = tableauBtnEditer;
+    }
+
+    private ArrayList<ArrayList<String>> tabListFilm;
 
 
     public ViewList(Menu model, VBox vb, Film film1) {
@@ -98,21 +124,30 @@ public class ViewList {
 
     }
 
+   // public ArrayList<ArrayList<String>> getTablistFilmActu(ArrayList<ArrayList<String>> tablistFilmActua){
+   //     return tablistFilmActua;
+    //}
+
     public void init(){
 
-        BDDManager bdd = new BDDManager();
+        bdd = new BDDManager();
 
         bdd.start();
         // bdd.lire("src/sample/BDDFilm.sql");
 
         //  tabListFilmLongueur =  bdd.ask("SELECT * FROM DVDTHEQUE.Film;").size();
 
-        ArrayList<ArrayList<String>> tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
+
+       tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
+
+      //  getTablistFilmActu(tabListFilm);
 
         VBox vboxListe = new VBox();
         vboxListe.setSpacing(20);
 
         tableauBtnSupprimer.clear();
+        tableauBtnEditer.clear();
+
 
         for (int i=0; i<tabListFilm.size(); i++){
 
@@ -124,6 +159,14 @@ public class ViewList {
             initImageLabel();
             initRealisateurLabel();
 
+            initGenreLabel();
+
+            tabgenreString = bdd.ask("SELECT Libelle_Genre FROM DVDTHEQUE.genre " +
+                    "WHERE Id_Genre IN " +
+                    "(SELECT film_genre.Genre_id FROM DVDTHEQUE.genre " +
+                    "INNER JOIN DVDTHEQUE.film_genre ON genre.Id_Genre = film_genre.Film_id " +
+                    "INNER JOIN DVDTHEQUE.film ON film_genre.Film_id = film.Id_Film " +
+                    "Where Nom_Film = '" + tabListFilm.get(i).get(1) + "')");
 
             initNomFilm(tabListFilm.get(i).get(1));
             initAnneeFilm(tabListFilm.get(i).get(2));
@@ -134,8 +177,7 @@ public class ViewList {
             initNationalite(tabListFilm.get(i).get(7));
 
            // System.out.println(tabListFilm.get(1).get(5));
-            HBox hbox = initBoxFilm(tabListFilm.get(i).get(5));
-
+            HBox hbox = initBoxFilm(tabListFilm.get(i).get(5), tabgenreString);
 
             vboxListe.getChildren().add(hbox);
 
@@ -181,13 +223,30 @@ public class ViewList {
     public void setEvents(Controler ajout) {
         buttonAjouterFilm.setOnMouseClicked(ajout);
 
-        System.out.println(tableauBtnSupprimer);
+       // System.out.println(tableauBtnSupprimer);
         for (int i =0; i<tableauBtnSupprimer.size(); i++) {
             tableauBtnSupprimer.get(i).setOnMouseClicked(ajout);
         }
+
+
+        for (int i =0; i<tableauBtnSupprimer.size(); i++) {
+            tableauBtnEditer.get(i).setOnMouseClicked(ajout);
+        }
     }
 
-    private HBox initBoxFilm(String chemin){
+    private HBox initBoxFilm(String chemin, ArrayList<ArrayList<String>> tabgenreString){
+
+        genreT = new Text("");
+
+        String phraseGenreTotale = "";
+        for(int z = 0; z<tabgenreString.size(); z++) {
+            phraseGenreTotale += tabgenreString.get(z).get(0) + "\n";
+        }
+
+
+        genreT.setText(phraseGenreTotale);
+        genreT.setFont(Font.font("Amble CN", BOLD, 20));
+
 
         HboxFilm boxFilm = new HboxFilm(chemin);
         HBox hboxConstruite = boxFilm.gethBox();
@@ -201,23 +260,28 @@ public class ViewList {
         Button buttonEditer = new Button();
         buttonEditer.setText("Editer");
         buttonEditer.setTranslateX(460);
-        buttonEditer.setTranslateY(-34);
+        buttonEditer.setTranslateY(5);
+        tableauBtnEditer.add(buttonEditer);
 
 
         Button buttonSupprimer = new Button();
         buttonSupprimer.setText("Supprimer");
         buttonSupprimer.setTranslateX(520);
-        buttonSupprimer.setTranslateY(-60);
+        buttonSupprimer.setTranslateY(-20);
 
         tableauBtnSupprimer.add(buttonSupprimer);
 
         ImageView play = new ImageView("assets/image/play.png");
 
         play.setFitWidth(70);
-        play.setTranslateY(-12);
+        play.setTranslateY(32);
         play.setPreserveRatio(true);
 
         nomFilm.setFont(fontTitre);
+        nomFilm.setTranslateY(-12);
+
+        nomFilmT.setTranslateY(-12);
+
         anneeFilm.setFont(fontTitre);
         noteFilm.setFont(fontTitre);
         resumeFilm.setFont(fontTitre);
@@ -225,29 +289,77 @@ public class ViewList {
 
         nomFilmT.setFont(fontTitreFilm);
 
-        anneeFilmT.setTranslateY(2);
 
 
-        nomRealisateur.setTranslateX(50);
-        nomRealisateur.setTranslateY(-31);
+        resumeFilm.setTranslateY(0);
+        resumeFilmT.setTranslateY(0);
 
-        nomRealisateurFilmT.setTranslateX(52);
-        nomRealisateurFilmT.setTranslateY(-30);
+        VBox colonne1 = new VBox();
 
-        noteFilm.setTranslateX(120);
-        noteFilm.setTranslateY(-62);
+        colonne1.getChildren().addAll(anneeFilm, anneeFilmT);
 
-        noteFilmT.setTranslateX(120);
-        noteFilmT.setTranslateY(-60);
+        VBox colonne2 = new VBox();
+        colonne2.getChildren().addAll(  nomRealisateur, nomRealisateurFilmT);
 
-        resumeFilm.setTranslateY(-40);
-        resumeFilmT.setTranslateY(-40);
+        VBox colonne3 = new VBox();
+        colonne3.getChildren().addAll(  noteFilm, noteFilmT);
+
+
+        VBox vboxGenre = new VBox();
+        vboxGenre.setPrefHeight(150);
+        vboxGenre.setMinHeight(150);
+       // vboxGenre.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+
+
+        vboxGenre.setPrefWidth(230);
+        vboxGenre.setMaxWidth(230);
+        //vboxGenre.setAlignment();
+        //vboxGenre.setTranslateX(80);
+        //vboxGenre.setTranslateY(-10);
+        //vboxGenre.setLayoutX(200);
+        VBox.setMargin(vboxGenre, new Insets(0, 0, 0, 100));
+
+
+        // vboxGenre.setTranslateX(330);
+        //vboxGenre.setTranslateY(-60);
+
+        HBox ligne2 = new HBox();
+
+        ligne2.minWidth(150);
+        ligne2.setSpacing(30);
+        ligne2.getChildren().addAll(colonne1,colonne2,colonne3);
+
+        VBox blocV1DansTeteBloc = new VBox();
+        blocV1DansTeteBloc.getChildren().addAll( nomFilm, nomFilmT, ligne2);
+        blocV1DansTeteBloc.setMinWidth(380);
+
+        HBox teteBloc = new HBox();
+       // teteBloc.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
+        teteBloc.getChildren().addAll( blocV1DansTeteBloc, vboxGenre);
+
+
+
+
+
+
+       // vboxGenre.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        vboxGenre.setAlignment(Pos.TOP_RIGHT);
+        //vBox.setTranslateY();
+
+
+        vboxGenre.getChildren().add(genreT);
 
         VBox vboxDescription = new VBox();
-        vboxDescription.getChildren().addAll(nomFilm, nomFilmT, anneeFilm, anneeFilmT,  nomRealisateur, nomRealisateurFilmT,  noteFilm, noteFilmT, resumeFilm, resumeFilmT, play, buttonEditer, buttonSupprimer);
+
+
+
+        vboxDescription.getChildren().addAll(teteBloc, resumeFilm, resumeFilmT,  play, buttonEditer, buttonSupprimer);
 
         hboxConstruite.getChildren().addAll( vboxDescription);
-              //, anneeFilmT, noteFilmT, resumeFilmT, imageFilmT, nomRealisateurFilmT););
+        hboxConstruite.setMaxHeight(250);
+        hboxConstruite.setPrefHeight(250);
+
+        //, anneeFilmT, noteFilmT, resumeFilmT, imageFilmT, nomRealisateurFilmT););
 
         return hboxConstruite ;
     }
@@ -267,6 +379,8 @@ public class ViewList {
         anneeFilm = new Label("Annee");
         anneeFilm.setFont(Font.font("Amble CN",15));
     }
+
+
 
     private void initNoteFilmLabel() {
         noteFilm = new Label("Note");
@@ -288,11 +402,16 @@ public class ViewList {
         nomRealisateur.setFont(Font.font("Amble CN", 15));
     }
 
+    private void initGenreLabel() {
+        genre = new Label("Genre");
+        genre.setFont(Font.font("Amble CN",15));
+    }
+
 
 
     private void initTitrePage() {
         titrePage = new Label("Liste des Films");
-        titrePage.setFont(Font.font("Amble CN", BOLD, 24));
+        titrePage.setFont(Font.font("Amble CN", BOLD, 30));
         titrePage.setTranslateX(-30);
     }
 
@@ -301,6 +420,7 @@ public class ViewList {
   //          login = new Text(filmAAfficher.getNomFilm());
         //System.out.println("initLogin : " + filmAAfficher.getLogin());
    // }
+
 
 
     private void initNomFilm(String s) {
@@ -338,6 +458,8 @@ public class ViewList {
 
 
     }
+
+
 
     private void initNationalite(String s) {
 

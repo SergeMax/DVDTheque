@@ -31,6 +31,7 @@ public class HboxFilm {
         hBox.setTranslateY(0);
         hBox.setMaxWidth(890);
         hBox.setMinWidth(890);
+        hBox.setMaxHeight(250);
 
 
 

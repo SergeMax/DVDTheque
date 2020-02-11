@@ -61,26 +61,26 @@ public class ViewHandler extends Application {
         root = new VBox();
         rootVueList = new VBox();
         rootVueDemmarage = new Group();
-        rootVueDemmarage.prefWidth(1000);
-        rootVueDemmarage.minWidth(1000);
-        rootVueDemmarage.minHeight(800);
-        rootVueDemmarage.maxHeight(800);
+        rootVueDemmarage.prefWidth(1200);
+        rootVueDemmarage.minWidth(1200);
+        rootVueDemmarage.minHeight(1000);
+        rootVueDemmarage.maxHeight(1000);
 
 
 
 
-        root.setPadding(new Insets(50, 50, 50, 50));
+        root.setPadding(new Insets(50, 150, 50, 150));
         root.setSpacing(10);
-        root.setMinWidth(1000);
-        root.setMaxWidth(1000);
+        root.setMinWidth(1200);
+        root.setMaxWidth(1200);
         root.setMinHeight(800);
 
         root.setMaxHeight(800);
 
-        rootVueList.setPadding(new Insets(50, 50, 50, 50));
+        rootVueList.setPadding(new Insets(50, 150, 50, 150));
         rootVueList.setSpacing(10);
-        rootVueList.setMinWidth(1000);
-        rootVueList.setMaxWidth(1000);
+        rootVueList.setMinWidth(1200);
+        rootVueList.setMaxWidth(1200);
         rootVueList.setMaxHeight(800);
         rootVueList.setMinHeight(800);
 
@@ -109,7 +109,16 @@ public class ViewHandler extends Application {
         BDDManager bdd = new BDDManager();
 
         bdd.start();
+
+        System.out.println(bdd.ask("SELECT Libelle_Genre FROM DVDTHEQUE.genre " +
+                "WHERE Id_Genre IN " +
+                "(SELECT film_genre.Genre_id FROM DVDTHEQUE.genre " +
+                "INNER JOIN DVDTHEQUE.film_genre ON genre.Id_Genre = film_genre.Film_id " +
+                "INNER JOIN DVDTHEQUE.film ON film_genre.Film_id = film.Id_Film " +
+                "Where Nom_Film = 'CInquieme Element')"));
+
        // bdd.lire("src/sample/BDDFilm.sql");
+
 
         tabListFilmLongueur =  bdd.ask("SELECT * FROM DVDTHEQUE.Film;").size();
 
@@ -117,7 +126,6 @@ public class ViewHandler extends Application {
 
      //   System.out.println(tabListFilm);
         for (int i = 0; i< tabListFilmLongueur-1; i++){
-
 
         }
 

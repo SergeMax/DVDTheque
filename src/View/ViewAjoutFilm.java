@@ -58,6 +58,14 @@ public class ViewAjoutFilm {
     private ImageView imgDvd;
     private ImageView imageDvd;
 
+    public Label getTitreFormulaire() {
+        return titreFormulaire;
+    }
+
+    public void setTitreFormulaire(Label titreFormulaire) {
+        this.titreFormulaire = titreFormulaire;
+    }
+
     public ViewAjoutFilm(Menu model, VBox vb) {
 
         this.root = vb;
@@ -149,7 +157,7 @@ public class ViewAjoutFilm {
 
     private void initTitreFormulaire() {
         titreFormulaire = new Label("Ajouter Film");
-        titreFormulaire.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
+        titreFormulaire.setFont(Font.font("Amble CN", FontWeight.BOLD, 30));
     }
 
 
@@ -172,6 +180,7 @@ public class ViewAjoutFilm {
     private void initAreaResumeFilm() {
         areaResumeFilm = new TextField("");
         areaResumeFilm.setMinWidth(120);
+        areaResumeFilm.setMinHeight(130);
 
     }
 
@@ -260,7 +269,7 @@ public class ViewAjoutFilm {
 
 
 
-    public Button getButtonValider() {
+    public Button getButtonValiderAjoutModif() {
         return buttonValider;
     }
 

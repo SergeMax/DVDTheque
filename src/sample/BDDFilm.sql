@@ -41,22 +41,35 @@ CREATE TABLE DVDTHEQUE.Film_Acteur(
         Film_id    Int,
         Acteur_id   Int,
         PRIMARY KEY(Film_id,Acteur_id),
-        CONSTRAINT fkFilmActeur1 FOREIGN KEY (Film_id) REFERENCES Film(Id_Film),
-        CONSTRAINT fkFilmActeur2 FOREIGN KEY (Acteur_id) REFERENCES Acteur(Id_Acteur)
+        CONSTRAINT fkFilmActeur1 FOREIGN KEY (Film_id) REFERENCES Film(Id_Film) ON DELETE CASCADE,
+        CONSTRAINT fkFilmActeur2 FOREIGN KEY (Acteur_id) REFERENCES Acteur(Id_Acteur) ON DELETE CASCADE
 );
 
 CREATE TABLE DVDTHEQUE.Film_Genre(
         Film_id    Int,
         Genre_id   Int,
         PRIMARY KEY(Film_id,Genre_id),
-        CONSTRAINT fkFilmGenre1 FOREIGN KEY (Film_id) REFERENCES Film(Id_Film),
-        CONSTRAINT fkFilmGenre2 FOREIGN KEY (Genre_id) REFERENCES Genre(Id_Genre)
+        CONSTRAINT fkFilmGenre1 FOREIGN KEY (Film_id) REFERENCES Film(Id_Film) ON DELETE CASCADE,
+        CONSTRAINT fkFilmGenre2 FOREIGN KEY (Genre_id) REFERENCES Genre(Id_Genre) ON DELETE CASCADE
 );
 
 INSERT INTO DVDTHEQUE.Realisateur VALUES (1, 'pablo', 'juju');
 INSERT INTO DVDTHEQUE.Nationnalite VALUES (1, 'Francaise');
 
-INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CInquieme Element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/roro.png', 1, 1);
+
+
+
+INSERT INTO DVDTHEQUE.genre (Libelle_Genre) VALUES ('Action');
+INSERT INTO DVDTHEQUE.genre (Libelle_Genre) VALUES ('Aventure');
+INSERT INTO DVDTHEQUE.genre (Libelle_Genre) VALUES ('Horreur');
+INSERT INTO DVDTHEQUE.genre (Libelle_Genre) VALUES ('S-F');
+INSERT INTO DVDTHEQUE.genre (Libelle_Genre) VALUES ('Romantisme');
+
+
+
+
+
+INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CInquieme Element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/5elem.png', 1, 1);
 
 INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('vvvvv', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);
 
@@ -66,4 +79,32 @@ INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_
 
 INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('C Elt', 4444, 5, 'ferofk_elrfkeref', 'assets/image/titanic.png', 1, 1);
 
-INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('CIieme Element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);
+
+
+
+
+INSERT INTO DVDTHEQUE.film_genre VALUES (1, 1);
+INSERT INTO DVDTHEQUE.film_genre VALUES (1, 2);
+INSERT INTO DVDTHEQUE.film_genre VALUES (2, 2);
+INSERT INTO DVDTHEQUE.film_genre VALUES (2, 3);
+INSERT INTO DVDTHEQUE.film_genre VALUES (2, 4);
+INSERT INTO DVDTHEQUE.film_genre VALUES (3, 1);
+INSERT INTO DVDTHEQUE.film_genre VALUES (4, 2);
+INSERT INTO DVDTHEQUE.film_genre VALUES (4, 5);
+INSERT INTO DVDTHEQUE.film_genre VALUES (5, 2);
+INSERT INTO DVDTHEQUE.film_genre VALUES (5, 5);
+
+
+
+
+INSERT INTO DVDTHEQUE.acteur (Nom_Acteur, Prenom_Acteur) VALUES ('Serge', 'Blanco');
+
+INSERT INTO DVDTHEQUE.acteur (Nom_Acteur, Prenom_Acteur) VALUES ('Salim', 'Benbaouï');
+
+INSERT INTO DVDTHEQUE.film_acteur VALUES (1, 1);
+INSERT INTO DVDTHEQUE.film_acteur VALUES (1, 2);
+INSERT INTO DVDTHEQUE.film_acteur VALUES (2, 2);
+INSERT INTO DVDTHEQUE.film_acteur VALUES (2, 1);
+
+
+

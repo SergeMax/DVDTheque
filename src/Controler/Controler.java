@@ -4,9 +4,7 @@ package Controler;
 import Model.Film;
 import View.ViewHandler;
 import View.ViewAjoutFilm;
-import View.ViewList;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
@@ -14,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import sample.BDDManager;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Controler implements EventHandler<MouseEvent> {
@@ -34,11 +31,13 @@ public class Controler implements EventHandler<MouseEvent> {
     private VBox root;
 
     private BDDManager bdd;
-    private Text filmAjoute;
+    private Text filmAjoute = new Text();
     private Film film1;
     private ArrayList<ArrayList<String>> tabListFilm;
     private boolean efface = false;
     private int sizeTab;
+    private boolean modeModif = false;
+    private int numeroAModif;
 
     public ArrayList<ArrayList<String>> getTabListFilm() {
         return tabListFilm;
@@ -56,6 +55,7 @@ public class Controler implements EventHandler<MouseEvent> {
         this.root = root;
         this.tabListFilm = tabListFilm;
         sizeTab = tabListFilm.size();
+
     }
 
     public Controler(ViewHandler viewHandler, Menu model, Film utilisateur1) {
@@ -69,48 +69,141 @@ public class Controler implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
 
-        if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValider())) {
+        if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif())) {
 
-            if (filmAjoute == null) {
-                filmAjoute = new Text("Erreur verifier votre saisie!!");
+root.getChildren().remove(filmAjoute);
+
+            if (modeModif == false) {
+
+                if (filmAjoute == null) {
+                    filmAjoute.setText("Erreur verifier votre saisie!!");
+                    root.getChildren().add(filmAjoute);
+                }
+
+
+                film1 = new Film();
+
+                film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
+                film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
+                film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
+                film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
+                film1.setImageFilm(viewHandler.getViewAjoutFilm().getAreaImageFilm().getText());
+                film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
+                film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
+
+
+                String requete = "INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) " +
+                        "VALUES ('" + film1.getNomFilm() + "', "
+                        + film1.getAnneeFilm() + ","
+                        + film1.getNoteFilm() + ", '"
+                        + film1.getResumeFilm() + "', '"
+                        + film1.getImageFilm() + "',"
+                        + film1.getRealisateurFilm() + ","
+                        + film1.getNationaliteFilm() + ");";
+                System.out.println(requete);
+
+
+                // tabListFilm.add();
+
+                // viewInscription.initTextFilmBienAjoute();
+
+
+                Boolean succes = bdd.edit(requete);
+
+                viewHandler.afficherViewList(film1, tabListFilm);
+
+                viewHandler.afficherAjoutFilm();
                 root.getChildren().add(filmAjoute);
+
+                if (succes == true) {
+                    filmAjoute.setText("Film bien ajouté ! ");
+                    sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size() + 1;
+
+                } else {
+                    filmAjoute.setText("Erreur ! ");
+                }
+
+            }else{
+
+
+
+
+                film1 = new Film();
+
+                film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
+                film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
+                film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
+                film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
+                film1.setImageFilm(viewHandler.getViewAjoutFilm().getAreaImageFilm().getText());
+                film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
+                film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
+
+
+
+                String requete = "UPDATE dvdtheque.Film SET Nom_Film = '"+
+                        film1.getNomFilm() +
+                        "', Annee_Film = "+ film1.getAnneeFilm() +
+                        ", Note_Film = "+ film1.getNoteFilm() +
+                        ", Resume_Film = '"+ film1.getResumeFilm() +
+                        "', Image_Film = '"+ film1.getImageFilm() +
+                        "', Realisateur_id = "+ film1.getRealisateurFilm() +
+                        ", Nationnalite_id= "+ film1.getNationaliteFilm() +
+                        " WHERE Nom_Film = '" +tabListFilm.get(numeroAModif).get(1)+ "';";
+
+                System.out.println(requete);
+
+
+                // tabListFilm.add();
+
+                // viewInscription.initTextFilmBienAjoute();
+
+
+                Boolean succes = bdd.edit(requete);
+
+
+
+
+
+                viewHandler.getViewAjoutFilm().getAreaNomFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaAnneeFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaNote().setText("");
+                viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
+                viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
+
+
+
+
+
+
+                viewHandler.afficherViewList(film1, tabListFilm);
+
+                viewHandler.getViewAjoutFilm().getTitreFormulaire().setText("Ajouter un film");
+                viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif().setText("Ajouter");
+
+                viewHandler.getViewAjoutFilm().getAreaNomFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaAnneeFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaNote().setText("");
+                viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
+                viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
+
+                modeModif= false;
             }
 
-
-            film1 = new Film();
-
-            film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
-            film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
-            film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
-            film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
-            film1.setImageFilm(viewHandler.getViewAjoutFilm().getAreaImageFilm().getText());
-            film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
-            film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
-
-
-            String requete = "INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) " +
-                    "VALUES ('" + film1.getNomFilm() + "', "
-                    + film1.getAnneeFilm() + ","
-                    + film1.getNoteFilm() + ", '"
-                    + film1.getResumeFilm() + "', '"
-                    + film1.getImageFilm() + "',"
-                    + film1.getRealisateurFilm() + ","
-                    + film1.getNationaliteFilm() + ");";
-            System.out.println(requete);
-
-            // viewInscription.initTextFilmBienAjoute();
-
-
-            Boolean succes = bdd.edit(requete);
-
-            if (succes == true) {
-                filmAjoute.setText("Film bien ajouté ! ");
-            } else {
-                filmAjoute.setText("Erreur ! ");
-            }
         }
 
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonRetourListe())) {
+            filmAjoute.setText("");
+
+            viewHandler.afficherViewList(film1, tabListFilm);
+
+        }
+
+        if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonRetourListe())) {
+
 
             viewHandler.afficherViewList(film1, tabListFilm);
 
@@ -124,6 +217,7 @@ public class Controler implements EventHandler<MouseEvent> {
         }
 
         if (mouseEvent.getSource().equals(viewHandler.getViewList().getButtonAjouterFilm())) {
+            filmAjoute.setText("");
 
             viewHandler.afficherAjoutFilm();
             for (int i = 0; i < viewHandler.getViewList().getTableauBtnSupprimer().size(); i++) {
@@ -145,25 +239,29 @@ public class Controler implements EventHandler<MouseEvent> {
 
                 if (efface == true) {
 
-                    String titreFilm = tabListFilm.get(i).get(1);
+                    String titreFilm = viewHandler.getViewList().getTabListFilm().get(i).get(1);
                     viewHandler.getViewList().getTableauBtnSupprimer().remove(i);
+                    //  viewHandler.getViewList().getTablistFilmActu()
 
-                    tabListFilm.remove(i);
+                    viewHandler.getViewList().getTabListFilm().get(i).get(1);
                     System.out.println(titreFilm);
                     String requete = "DELETE FROM DVDTHEQUE.Film WHERE Nom_Film ='" + titreFilm + "';";
                     bdd.edit(requete);
 
 
-                    viewHandler.afficherViewList(film1, tabListFilm);
-                    sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
+                    tabListFilm = viewHandler.getViewList().getTabListFilm();
 
+                    viewHandler.afficherViewList(film1, tabListFilm);
+                    //  viewHandler.getViewList().getTableauBtnSupprimer().get(i).setText("" + i);
+
+                    sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
 
                 }
 
             }
 
-            if (efface == true){
+            if (efface == true) {
 
                 efface = false;
                 break;
@@ -173,6 +271,31 @@ public class Controler implements EventHandler<MouseEvent> {
 
         }
 
+        for (int i = 0; i < sizeTab; i++) {
 
+            if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnEditer().get(i))) {
+
+                System.out.println("cliqué edite numero" + i);
+
+                numeroAModif = i;
+
+                viewHandler.getViewAjoutFilm().getTitreFormulaire().setText("Modifier le film");
+                viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif().setText("Valider la modification");
+
+                modeModif = true;
+
+
+                viewHandler.getViewAjoutFilm().getAreaNomFilm().setText("" + tabListFilm.get(i).get(1));
+                viewHandler.getViewAjoutFilm().getAreaAnneeFilm().setText("" + tabListFilm.get(i).get(2));
+                viewHandler.getViewAjoutFilm().getAreaNote().setText("" + tabListFilm.get(i).get(3));
+                viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("" + tabListFilm.get(i).get(4));
+                viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("" + tabListFilm.get(i).get(5));
+                viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("" + tabListFilm.get(i).get(6));
+                viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("" + tabListFilm.get(i).get(7));
+
+                viewHandler.afficherAjoutFilm();
+
+            }
+        }
     }
 }
