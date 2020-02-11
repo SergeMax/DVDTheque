@@ -9,10 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -65,6 +67,9 @@ public class ViewList {
     private ArrayList<ArrayList<String>> tabgenreString;
     private BDDManager bdd;
     private Text genreT;
+    private TextField areaRechercheFilm;
+    private Label RechercheFilm;
+    private Button buttonValiderRecherche;
 
     public ArrayList<ArrayList<String>> getTabListFilm() {
         return tabListFilm;
@@ -92,6 +97,9 @@ public class ViewList {
 
         initTitrePage();
         initImageDvd();
+        initareaRechercheFilm();
+        initRechercheFilm();
+        initbuttonValiderRecherche();
         //initLogin();
 
 
@@ -122,6 +130,26 @@ public class ViewList {
         imageDvd.setTranslateX(420);
 
 
+    }
+
+    private  void initareaRechercheFilm() {
+        areaRechercheFilm= new TextField("");
+        areaRechercheFilm.setMaxWidth(650);
+        areaRechercheFilm.setTranslateX(-30);
+        areaRechercheFilm.setTranslateY(50);
+
+    }
+    private void initRechercheFilm() {
+        RechercheFilm = new Label("Recherche :");
+        RechercheFilm.setFont(Font.font("Amble CN", FontWeight.BOLD, 20));
+        RechercheFilm.setTranslateX(-30);
+        RechercheFilm.setTranslateY(-20);
+    }
+    private void initbuttonValiderRecherche() {
+        buttonValiderRecherche = new Button();
+        buttonValiderRecherche.setText("Valider");
+        buttonValiderRecherche.setTranslateX(650);
+        buttonValiderRecherche.setTranslateY(-23);
     }
 
    // public ArrayList<ArrayList<String>> getTablistFilmActu(ArrayList<ArrayList<String>> tablistFilmActua){
@@ -491,6 +519,11 @@ public class ViewList {
 
         root.getChildren().add(titrePage);
         root.getChildren().add(buttonAjouterFilm);
+        root.getChildren().add(areaRechercheFilm);
+        root.getChildren().add(RechercheFilm);
+
+        root.getChildren().add(buttonValiderRecherche);
+
 
 
         //root.getChildren().add(vboxListe);

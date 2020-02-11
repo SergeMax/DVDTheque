@@ -33,6 +33,9 @@ public class ViewHandler extends Application {
     private ViewDemarrage viewDemarrage;
     private Scene demarage;
     private Group rootVueDemmarage;
+    private Scene filmDetail;
+    private ViewFilmDetail viewFilmDetail;
+    private VBox rootVueFilmDetail;
 
     public ViewList getViewList() {
         return viewList;
@@ -47,6 +50,10 @@ public class ViewHandler extends Application {
 
     public ViewDemarrage getViewDemarrage() {
         return viewDemarrage;
+    }
+
+    public ViewFilmDetail getViewFilmDetail() {
+        return viewFilmDetail;
     }
 
     @Override
@@ -85,12 +92,22 @@ public class ViewHandler extends Application {
         rootVueList.setMaxHeight(900);
         rootVueList.setMinHeight(900);
 
+        rootVueFilmDetail = new VBox();
+        rootVueFilmDetail.setPadding(new Insets(50, 150, 0, 100));
+
+        rootVueFilmDetail.setSpacing(10);
+        rootVueFilmDetail.setMinWidth(1200);
+        rootVueFilmDetail.setMaxWidth(1200);
+        rootVueFilmDetail.setMinHeight(900);
+
+        rootVueFilmDetail.setMaxHeight(900);
 
 
 
         ajoutFilm = new Scene(root, Color.WHITE);
         listFilm = new Scene(rootVueList, Color.WHITE);
         demarage = new Scene(rootVueDemmarage, Color.WHITE);
+        filmDetail = new Scene(rootVueFilmDetail, Color.WHITE);
 
 
 
@@ -99,6 +116,7 @@ public class ViewHandler extends Application {
 
         viewList = new ViewList(model, rootVueList, filmTest);
         viewDemarrage = new ViewDemarrage(model, rootVueDemmarage);
+        viewFilmDetail = new ViewFilmDetail(model, rootVueFilmDetail, filmTest);
 
 
         viewList.setVueListFilm();
@@ -171,7 +189,8 @@ public class ViewHandler extends Application {
     public void setEventHandlerAjoutFilm(Controler ajout) {
         viewAjoutFilm.setEvents(ajout);
         viewDemarrage.setEvents(ajout);
-viewList.setEvents(ajout);
+        viewList.setEvents(ajout);
+        viewFilmDetail.setEvents(ajout);
     }
 
 
@@ -200,6 +219,18 @@ viewList.setEvents(ajout);
 
     }
 
+
+    public void afficherViewFilmDetail() {
+
+        viewFilmDetail.init();
+
+        viewFilmDetail.setVueListFilm();
+
+        setEventHandlerAjoutFilm(controlerInscr);
+
+        primaryStage.setScene(filmDetail);
+
+    }
 
     public void afficherAjoutFilm() {
 

@@ -75,12 +75,13 @@ root.getChildren().remove(filmAjoute);
 
             if (modeModif == false) {
 
-                if (filmAjoute == null) {
+
                     filmAjoute.setText("Erreur verifier votre saisie!!");
-                    root.getChildren().add(filmAjoute);
-                }
+                    filmAjoute.setTranslateY(-24);
+                   // root.getChildren().add(filmAjoute);
 
 
+                root.getChildren().add(filmAjoute);
                 film1 = new Film();
 
                 film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
@@ -113,7 +114,7 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.afficherViewList(film1, tabListFilm);
 
                 viewHandler.afficherAjoutFilm();
-                root.getChildren().add(filmAjoute);
+             //   root.getChildren().add(filmAjoute);
                 sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
                 if (succes == true) {
@@ -163,10 +164,6 @@ root.getChildren().remove(filmAjoute);
                 Boolean succes = bdd.edit(requete);
 
 
-
-
-
-
                 viewHandler.getViewAjoutFilm().getAreaNomFilm().setText("");
                 viewHandler.getViewAjoutFilm().getAreaAnneeFilm().setText("");
                 viewHandler.getViewAjoutFilm().getAreaNote().setText("");
@@ -174,11 +171,6 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("");
                 viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
-
-
-
-
-
 
                 viewHandler.afficherViewList(film1, tabListFilm);
 
@@ -189,7 +181,9 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getAreaAnneeFilm().setText("");
                 viewHandler.getViewAjoutFilm().getAreaNote().setText("");
                 viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("");
-                viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("");
+                viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("Chercher l'image");
+                viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getImagePrev());
+
                 viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
 
@@ -294,6 +288,7 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getAreaNote().setText("" + tabListFilm.get(i).get(3));
                 viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("" + tabListFilm.get(i).get(4));
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("" + tabListFilm.get(i).get(5));
+                viewHandler.getViewAjoutFilm().initEditZoneImage(tabListFilm.get(i).get(5));
                 viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("" + tabListFilm.get(i).get(6));
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("" + tabListFilm.get(i).get(7));
 

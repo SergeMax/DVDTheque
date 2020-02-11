@@ -3,10 +3,8 @@ package View;
 import Controler.Controler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,7 +26,7 @@ public class ViewAjoutFilm {
     private TextField areaNomFilm;
     private TextField areaAnneeFilm;
     private TextField areaNote;
-    private TextField areaResumeFilm;
+    private TextArea areaResumeFilm;
     private Button areaImageFilm;
     private TextField areaRealisateur;
     private TextField ville;
@@ -61,6 +59,8 @@ public class ViewAjoutFilm {
     private ImageView imgDvd;
     private ImageView imageDvd;
     private FileChooser directoryRef;
+    private HBox imageBox;
+    private ImageView imagePrev = null;
 
     public String getCheminFIchier() {
         return cheminFIchier;
@@ -137,6 +137,10 @@ public class ViewAjoutFilm {
         anneeFilm.setFont(Font.font("Amble CN",15));
     }
 
+    public VBox getRoot() {
+        return root;
+    }
+
     private void initNoteFilm() {
         noteFilm = new Label("Note");
         noteFilm.setFont(Font.font("Amble CN", 15));
@@ -189,23 +193,30 @@ public class ViewAjoutFilm {
     }
 
     private void initAreaResumeFilm() {
-        areaResumeFilm = new TextField("");
+        areaResumeFilm = new TextArea("");
+
         areaResumeFilm.setMinWidth(120);
         areaResumeFilm.setMinHeight(130);
 
 
     }
 
+    public ImageView getImagePrev() {
+        return imagePrev;
+    }
 
     private void initButtionDirectory(){
 
-        areaImageFilm = new Button("Chercher l'image.");
+        imageBox = new HBox();
 
+        areaImageFilm = new Button("Chercher l'image.");
+        imageBox.getChildren().addAll(areaImageFilm);
         areaImageFilm.setMinWidth(100);
+
         areaImageFilm.setOnMouseClicked((e) -> {
 
 
-       initAreaImageFilm();
+            initAreaImageFilm();
 
             directoryRef = new FileChooser();
 
@@ -213,7 +224,6 @@ public class ViewAjoutFilm {
 
             File file = directoryRef.showOpenDialog(primaryStage);
             cheminFIchier = file.getPath();
-
             cheminFIchier = System. getProperty("user.dir");
 
             System.out.println(cheminFIchier);
@@ -224,9 +234,55 @@ public class ViewAjoutFilm {
             areaImageFilm.setText(cheminFIchier);
 
 
+
+            Image ne = new Image(""+cheminFIchier);
+
+            if (imagePrev == null){
+                imagePrev = new ImageView(""+cheminFIchier);
+            }else {
+                imagePrev.setImage(ne);
+            }
+
+
+
+            imagePrev.setFitWidth(60);
+            imagePrev.setPreserveRatio(true);
+            imagePrev.setTranslateX(40);
+            imagePrev.setTranslateY(-25);
+
+            imageBox.getChildren().remove(imagePrev);
+
+            imageBox.getChildren().addAll(imagePrev);
+
             System.out.println(cheminFIchier);
         });
         // areaImageFilm.setMinWidth(120);
+    }
+
+    public void initEditZoneImage(String cheminFIchier){
+        initAreaImageFilm();
+
+        areaImageFilm.setText(cheminFIchier);
+
+        Image ne = new Image(""+cheminFIchier);
+
+        if (imagePrev == null){
+            imagePrev = new ImageView(""+cheminFIchier);
+        }else {
+            imagePrev.setImage(ne);
+        }
+
+
+
+        imagePrev.setFitWidth(60);
+        imagePrev.setPreserveRatio(true);
+        imagePrev.setTranslateX(40);
+        imagePrev.setTranslateY(-25);
+
+        imageBox.getChildren().addAll(imagePrev);
+
+        System.out.println(cheminFIchier);
+
     }
 
     private void initAreaImageFilm() {
@@ -296,7 +352,7 @@ public class ViewAjoutFilm {
         root.getChildren().add(areaResumeFilm);
 
         root.getChildren().add(imageFilm);
-        root.getChildren().add(areaImageFilm);
+        root.getChildren().add(imageBox);
 
 
         root.getChildren().add(nomRealisateur);
@@ -338,7 +394,7 @@ public class ViewAjoutFilm {
         return areaNote;
     }
 
-    public TextField getAreaResumeFilm() {
+    public TextArea getAreaResumeFilm() {
         return areaResumeFilm;
     }
 
