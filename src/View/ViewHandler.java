@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -198,7 +197,7 @@ public class ViewHandler extends Application {
 
 
     private void afficherInscription() {
-        viewAjoutFilm.setVueCompleteInscription();
+        viewAjoutFilm.setVueCompleteAjout();
         System.out.println("ca passer par la");
     }
 
@@ -249,6 +248,11 @@ public class ViewHandler extends Application {
 
     public void afficherAjoutFilm() {
 
+       // viewAjoutFilm.initChoiceReal();
+
+       // viewAjoutFilm.setVueCompleteAjout();
+
+        //setEventHandlerAjoutFilm(controlerInscr);
         primaryStage.setScene(ajoutFilm);
 
     }

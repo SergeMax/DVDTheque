@@ -54,7 +54,14 @@ CREATE TABLE DVDTHEQUE.Film_Genre(
 );
 
 INSERT INTO DVDTHEQUE.Realisateur VALUES (1, 'pablo', 'juju');
+INSERT INTO DVDTHEQUE.Realisateur VALUES (2, 'Foufou', 'steve');
+INSERT INTO DVDTHEQUE.Realisateur VALUES (3, 'Roulio', 'Mimi');
+
+
 INSERT INTO DVDTHEQUE.Nationnalite VALUES (1, 'Francaise');
+INSERT INTO DVDTHEQUE.Nationnalite VALUES (2, 'English');
+INSERT INTO DVDTHEQUE.Nationnalite VALUES (3, 'Kabil');
+
 
 
 

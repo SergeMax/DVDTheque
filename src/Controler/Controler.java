@@ -2,10 +2,12 @@ package Controler;
 
 
 import Model.Film;
-import View.HboxFilm;
 import View.ViewHandler;
 import View.ViewAjoutFilm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
@@ -97,7 +99,7 @@ public class Controler implements EventHandler<MouseEvent> {
 
                 film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
                 film1.setImageFilm(viewHandler.getViewAjoutFilm().getCheminFIchier());
-                film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
+                film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateurNom().getText());
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
 
@@ -120,7 +122,7 @@ public class Controler implements EventHandler<MouseEvent> {
                 Boolean succes = bdd.edit(requete);
 
 
-               // viewHandler.afficherViewList(film1, tabListFilm);
+                // viewHandler.afficherViewList(film1, tabListFilm);
                 viewHandler.afficherAjoutFilm();
 
 
@@ -146,7 +148,7 @@ public class Controler implements EventHandler<MouseEvent> {
                 film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
                 film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
                 film1.setImageFilm(viewHandler.getViewAjoutFilm().getCheminFIchier());
-                film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
+                film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateurNom().getText());
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
                 System.out.println(cheminEditImage);
@@ -191,7 +193,7 @@ public class Controler implements EventHandler<MouseEvent> {
                 viewHandler.getViewAjoutFilm().getAreaNote().setText("");
                 viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("");
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("");
-                viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
+                viewHandler.getViewAjoutFilm().getAreaRealisateurNom().setText("");
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
 
                 viewHandler.afficherViewList(film1, tabListFilm);
@@ -206,7 +208,7 @@ public class Controler implements EventHandler<MouseEvent> {
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("Chercher l'image");
                 viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getImagePrev());
 
-                viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
+                viewHandler.getViewAjoutFilm().getAreaRealisateurNom().setText("");
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
 
                 modeModif = false;
@@ -246,6 +248,69 @@ public class Controler implements EventHandler<MouseEvent> {
                 viewHandler.getViewList().getTableauBtnSupprimer().get(i).setText("" + i);
             }
 
+        }
+
+        if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderAuteur())) {
+
+            String requete = "INSERT INTO DVDTHEQUE.Realisateur (Nom_Realisateur, Prenom_Realisateur) " +
+                    "VALUES ('" + viewHandler.getViewAjoutFilm().getAreaRealisateurNom().getText() + "', '"
+                    + viewHandler.getViewAjoutFilm().getAreaRealisateurPrenom().getText() + "');";
+            System.out.println(requete);
+
+
+            // tabListFilm.add();
+
+            // viewInscription.initTextFilmBienAjoute();
+
+
+            Boolean succes = bdd.edit(requete);
+
+
+            ArrayList<ArrayList<String>> requeteRealisateur = bdd.ask("SELECT Nom_Realisateur, Prenom_Realisateur  FROM DVDTHEQUE.Realisateur;");
+
+            System.out.println(requeteRealisateur);
+
+            ArrayList<String> arrayNomPrenomAuteur = new ArrayList<>();
+
+            for (int l = 0; l < requeteRealisateur.size(); l++) {
+
+                String nomAuteur = requeteRealisateur.get(l).get(0);
+                String prenomAteur = requeteRealisateur.get(l).get(1);
+                String concatene = nomAuteur + " " + prenomAteur;
+                arrayNomPrenomAuteur.add(concatene);
+            }
+            System.out.println(arrayNomPrenomAuteur);
+
+           // Label labelRealisateur = new Label("Realisateur label:");
+            ObservableList<String> arraySelectAuteur //
+                    = FXCollections.observableArrayList(arrayNomPrenomAuteur);
+
+            viewHandler.getViewAjoutFilm().getChoiceBoxAuteur().setItems(arraySelectAuteur);
+
+
+        //    viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getChoiceBoxAuteur());
+          //  viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getNationaliteFilm());
+           // viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getHboxNationalite());
+            //viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif());
+            //viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getButtonRetourListe());
+
+
+          //  viewHandler.getViewAjoutFilm().initChoiceReal();
+           // viewHandler.getViewAjoutFilm().init();
+       //     viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getChoiceBoxAuteur());
+         //   viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getNationaliteFilm());
+          //  viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getHboxNationalite());
+           // viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif());
+            //viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getButtonRetourListe());
+
+
+            viewHandler.afficherAjoutFilm();
+
+
+        }
+
+        if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderNation())) {
+
 
         }
 
@@ -255,10 +320,9 @@ public class Controler implements EventHandler<MouseEvent> {
             if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnDetail().get(i))) {
 
 
-
                 tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
 
-                tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='"+tabListFilm.get(i).get(1)+"';");
+                tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='" + tabListFilm.get(i).get(1) + "';");
 
 
                 viewHandler.getViewFilmDetail().setTabListFilm(tabListFilmViewdetail);
@@ -355,7 +419,7 @@ public class Controler implements EventHandler<MouseEvent> {
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("" + tabListFilm.get(i).get(5));
                 cheminEditImage = tabListFilm.get(i).get(5);
                 viewHandler.getViewAjoutFilm().initEditZoneImage(tabListFilm.get(i).get(5));
-                viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("" + tabListFilm.get(i).get(6));
+                viewHandler.getViewAjoutFilm().getAreaRealisateurNom().setText("" + tabListFilm.get(i).get(6));
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("" + tabListFilm.get(i).get(7));
 
                 viewHandler.afficherAjoutFilm();
