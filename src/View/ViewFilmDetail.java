@@ -4,11 +4,7 @@ import Controler.Controler;
 import Model.Film;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -232,7 +228,7 @@ public class ViewFilmDetail {
 
         HBox hboxConstruite = boxFilm.gethBox();
         hboxConstruite.setPadding(new Insets(100, 100, 100, 100));
-hboxConstruite.setMinWidth(987);
+        hboxConstruite.setMinWidth(987);
 
 
 
@@ -245,6 +241,15 @@ hboxConstruite.setMinWidth(987);
         buttonEditer.setTranslateY(6);
         tableauBtnEditer.add(buttonEditer);
 
+        HBox acteurBox = new HBox();
+
+        Label acteurLabel = new Label("Acteur :  ");
+
+        Text acteurText = new Text("ACteioioerjoergjpoerkgpoekrg");
+        acteurBox.setTranslateY(25);
+
+
+        acteurBox.getChildren().addAll(acteurLabel, acteurText);
 
         Button buttonSupprimer = new Button();
         buttonSupprimer.setText("Supprimer");
@@ -304,7 +309,7 @@ hboxConstruite.setMinWidth(987);
         ligne2.getChildren().addAll(colonne1,colonne2,colonne3);
 
         VBox blocV1DansTeteBloc = new VBox();
-        blocV1DansTeteBloc.getChildren().addAll( nomFilm, nomFilmT, ligne2);
+        blocV1DansTeteBloc.getChildren().addAll( nomFilm, nomFilmT, ligne2, acteurBox);
         blocV1DansTeteBloc.setMinWidth(380);
 
         HBox teteBloc = new HBox();

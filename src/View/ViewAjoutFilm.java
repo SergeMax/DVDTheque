@@ -76,6 +76,11 @@ public class ViewAjoutFilm {
     private ChoiceBox<String> choiceBoxNation;
     private Button buttonValiderNation;
     private BDDManager bdd2;
+    private HBox hboxAnneeGenre;
+    private TextField areaGenre;
+    private Label genre;
+    private Button buttonValiderGenre;
+    private ChoiceBox<String> choiceBoxGenre;
 
 
     public String getCheminFIchier() {
@@ -132,6 +137,13 @@ public class ViewAjoutFilm {
         initButtonValiderAuteur();
         initChoiceReal();
         initHboxRealisateur();
+        initAnneeFilm();
+
+        initChoiceGenre();
+        initAreaGenre();
+        initGenre();
+        initButtonValiderGenre();
+        initHboxAnneGenre();
 
 
         initAreaNationalite();
@@ -147,7 +159,7 @@ public class ViewAjoutFilm {
 
 
         initNomFilm();
-        initAnneeFilm();
+
         initNoteFilm();
         initResumeFilm();
         initImageFilm();
@@ -183,6 +195,11 @@ public class ViewAjoutFilm {
     private void initNoteFilm() {
         noteFilm = new Label("Note");
         noteFilm.setFont(Font.font("Amble CN", 15));
+    }
+
+    private void initGenre() {
+        genre = new Label("Genre");
+        genre.setFont(Font.font("Amble CN", 15));
     }
 
     private void initResumeFilm() {
@@ -299,6 +316,32 @@ public class ViewAjoutFilm {
     }
 
 
+    public void initChoiceGenre() {
+
+        ArrayList<ArrayList<String>> requeteGenre = bdd.ask("SELECT Libelle_Genre  FROM DVDTHEQUE.Genre;");
+
+        System.out.println(requeteGenre);
+
+        ArrayList<String> arrayGenre = new ArrayList<>();
+
+        for (int l = 0; l < requeteGenre.size(); l++) {
+            String nationalite = requeteGenre.get(l).get(0);
+            arrayGenre.add(nationalite);
+        }
+
+        System.out.println(arrayGenre +"kkll");
+
+        // labelRealisateur = new Label("Nationalite");
+        ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayGenre);
+
+        choiceBoxGenre = new ChoiceBox<String>(arrayNatio);
+
+        choiceBoxGenre.setMinWidth(200);
+
+    }
+
+
+
 
     private void initAreaResumeFilm() {
         areaResumeFilm = new TextArea("");
@@ -405,6 +448,8 @@ initEditZoneImage(cheminFIchier);
         root.getChildren().remove(buttonRetourListe);
 
 
+
+
         root.getChildren().add(imageFilm);
         imageBox.getChildren().add(imagePrev);
         root.getChildren().add(imageBox);
@@ -459,7 +504,23 @@ initEditZoneImage(cheminFIchier);
         buttonValiderNation.setText("Ajouter une nationalité");
 
     }
+    private void initButtonValiderGenre(){
+        buttonValiderGenre= new Button();
+        buttonValiderGenre.setText("Ajouter un genre");
 
+    }
+
+    public TextField getAreaGenre() {
+        return areaGenre;
+    }
+
+    public Button getButtonValiderGenre() {
+        return buttonValiderGenre;
+    }
+
+    public ChoiceBox<String> getChoiceBoxGenre() {
+        return choiceBoxGenre;
+    }
 
     private void initAreaRealisateurNom() {
 
@@ -467,6 +528,21 @@ initEditZoneImage(cheminFIchier);
         areaRealisateurNom.setMinWidth(100);
 
     }
+
+    private void initHboxAnneGenre(){
+        hboxAnneeGenre = new HBox();
+        hboxAnneeGenre.getChildren().addAll(anneeFilm, areaAnneeFilm, genre, choiceBoxGenre, areaGenre, buttonValiderGenre);
+        hboxAnneeGenre.setSpacing(30);
+    }
+
+    private void initAreaGenre() {
+
+        areaGenre = new TextField("Genre");
+        areaGenre.setMinWidth(100);
+
+    }
+
+
 
     private void initAreaRealisateurPrenom() {
 
@@ -511,8 +587,8 @@ initEditZoneImage(cheminFIchier);
         root.getChildren().add(nomFilm);
         root.getChildren().add(areaNomFilm);
 
-        root.getChildren().add(anneeFilm);
-        root.getChildren().add(areaAnneeFilm);
+        root.getChildren().add(hboxAnneeGenre);
+
 
         root.getChildren().addAll(label, choiceBox);
 
@@ -543,6 +619,7 @@ initEditZoneImage(cheminFIchier);
         buttonRetourListe.setOnMouseClicked(ajout);
         buttonValiderAuteur.setOnMouseClicked(ajout);
         buttonValiderNation.setOnMouseClicked(ajout);
+        buttonValiderGenre.setOnMouseClicked(ajout);
 
     }
 

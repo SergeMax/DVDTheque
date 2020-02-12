@@ -7,6 +7,7 @@ import View.ViewAjoutFilm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.PasswordField;
@@ -83,7 +84,7 @@ public class Controler implements EventHandler<MouseEvent> {
 
 
                 filmAjoute.setText("Erreur verifier votre saisie!!");
-                filmAjoute.setTranslateY(-24);
+                filmAjoute.setTranslateY(-4);
                 // root.getChildren().add(filmAjoute);
 
 
@@ -103,14 +104,27 @@ public class Controler implements EventHandler<MouseEvent> {
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
 
+                String nomComplet = viewHandler.getViewAjoutFilm().getChoiceBoxAuteur().getSelectionModel().getSelectedItem();
+                        String[] separated = nomComplet.split(" ");
+
+                String requeteNomReal = "SELECT Id_Realisateur FROM DVDTHEQUE.Realisateur WHERE Nom_Realisateur = '"+separated[0]+"';";
+
+                ArrayList<ArrayList<String>> requetteNomReall = bdd.ask(requeteNomReal);
+                System.out.println(requetteNomReall);
+
+                String requeteNationalite = "SELECT Id_Nationnalite FROM DVDTHEQUE.Nationnalite WHERE Libelle_Nationnalite = '"+viewHandler.getViewAjoutFilm().getChoiceBoxNation().getSelectionModel().getSelectedItem()+"';";
+
+                ArrayList<ArrayList<String>> requeteNationalitee = bdd.ask(requeteNationalite);
+                System.out.println(requeteNationalitee);
+
                 String requete = "INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) " +
                         "VALUES ('" + film1.getNomFilm() + "', "
                         + film1.getAnneeFilm() + ","
                         + film1.getNoteFilm() + ", '"
                         + film1.getResumeFilm() + "', '"
                         + film1.getImageFilm() + "',"
-                        + film1.getRealisateurFilm() + ","
-                        + film1.getNationaliteFilm() + ");";
+                        + requetteNomReall.get(0).get(0) + ","
+                        + requeteNationalitee.get(0).get(0) + ");";
                 System.out.println(requete);
 
 
@@ -257,14 +271,7 @@ public class Controler implements EventHandler<MouseEvent> {
                     + viewHandler.getViewAjoutFilm().getAreaRealisateurPrenom().getText() + "');";
             System.out.println(requete);
 
-
-            // tabListFilm.add();
-
-            // viewInscription.initTextFilmBienAjoute();
-
-
             Boolean succes = bdd.edit(requete);
-
 
             ArrayList<ArrayList<String>> requeteRealisateur = bdd.ask("SELECT Nom_Realisateur, Prenom_Realisateur  FROM DVDTHEQUE.Realisateur;");
 
@@ -279,38 +286,74 @@ public class Controler implements EventHandler<MouseEvent> {
                 String concatene = nomAuteur + " " + prenomAteur;
                 arrayNomPrenomAuteur.add(concatene);
             }
-            System.out.println(arrayNomPrenomAuteur);
+            //System.out.println(arrayNomPrenomAuteur);
 
            // Label labelRealisateur = new Label("Realisateur label:");
             ObservableList<String> arraySelectAuteur //
                     = FXCollections.observableArrayList(arrayNomPrenomAuteur);
 
             viewHandler.getViewAjoutFilm().getChoiceBoxAuteur().setItems(arraySelectAuteur);
-
-
-        //    viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getChoiceBoxAuteur());
-          //  viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getNationaliteFilm());
-           // viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getHboxNationalite());
-            //viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif());
-            //viewHandler.getViewAjoutFilm().getRoot().getChildren().remove(viewHandler.getViewAjoutFilm().getButtonRetourListe());
-
-
-          //  viewHandler.getViewAjoutFilm().initChoiceReal();
-           // viewHandler.getViewAjoutFilm().init();
-       //     viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getChoiceBoxAuteur());
-         //   viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getNationaliteFilm());
-          //  viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getHboxNationalite());
-           // viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif());
-            //viewHandler.getViewAjoutFilm().getRoot().getChildren().add(viewHandler.getViewAjoutFilm().getButtonRetourListe());
-
-
-            viewHandler.afficherAjoutFilm();
+             viewHandler.afficherAjoutFilm();
 
 
         }
 
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderNation())) {
 
+
+            String requete = "INSERT INTO DVDTHEQUE.Nationnalite (Libelle_Nationnalite) " +
+                    "VALUES ('" + viewHandler.getViewAjoutFilm().getNationaliteFilm().getText() +"');";
+            System.out.println(requete);
+            Boolean succes = bdd.edit(requete);
+
+
+            ArrayList<ArrayList<String>> requeteNationalite = bdd.ask("SELECT Libelle_Nationnalite  FROM DVDTHEQUE.Nationnalite;");
+            System.out.println(requeteNationalite);
+
+            ArrayList<String> arrayNationalite = new ArrayList<>();
+
+            for (int l = 0; l < requeteNationalite.size(); l++) {
+                String nationalite = requeteNationalite.get(l).get(0);
+                arrayNationalite.add(nationalite);
+            }
+
+            System.out.println(arrayNationalite);
+
+            // labelRealisateur = new Label("Nationalite");
+            ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayNationalite);
+
+            viewHandler.getViewAjoutFilm().getChoiceBoxNation().setItems(arrayNatio);
+            viewHandler.afficherAjoutFilm();
+
+        }
+
+        if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderGenre())) {
+
+            System.out.println("ok valider genre entreed");
+
+            String requete = "INSERT INTO DVDTHEQUE.Genre (Libelle_Genre) " +
+                    "VALUES ('" + viewHandler.getViewAjoutFilm().getAreaGenre().getText() +"');";
+            System.out.println(requete);
+            Boolean succes = bdd.edit(requete);
+
+
+            ArrayList<ArrayList<String>> requeteGenre = bdd.ask("SELECT Libelle_Genre FROM DVDTHEQUE.Genre;");
+            System.out.println(requeteGenre);
+
+            ArrayList<String> arrayGenre = new ArrayList<>();
+
+            for (int l = 0; l < requeteGenre.size(); l++) {
+                String nationalite = requeteGenre.get(l).get(0);
+                arrayGenre.add(nationalite);
+            }
+
+            System.out.println(arrayGenre);
+
+            // labelRealisateur = new Label("Nationalite");
+            ObservableList<String> arrayGenree = FXCollections.observableArrayList(arrayGenre);
+
+            viewHandler.getViewAjoutFilm().getChoiceBoxGenre().setItems(arrayGenree);
+            viewHandler.afficherAjoutFilm();
 
         }
 
