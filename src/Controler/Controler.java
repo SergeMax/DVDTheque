@@ -2,6 +2,7 @@ package Controler;
 
 
 import Model.Film;
+import View.HboxFilm;
 import View.ViewHandler;
 import View.ViewAjoutFilm;
 import javafx.event.EventHandler;
@@ -38,6 +39,8 @@ public class Controler implements EventHandler<MouseEvent> {
     private int sizeTab;
     private boolean modeModif = false;
     private int numeroAModif;
+    private String cheminEditImage;
+
 
     public ArrayList<ArrayList<String>> getTabListFilm() {
         return tabListFilm;
@@ -86,7 +89,11 @@ root.getChildren().remove(filmAjoute);
 
                 film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
                 film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
-                film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
+                //film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
+
+                film1.setNoteFilm(viewHandler.getViewAjoutFilm().getChoiceBox().getSelectionModel().getSelectedIndex());
+
+
                 film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
                 film1.setImageFilm(viewHandler.getViewAjoutFilm().getCheminFIchier());
                 film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
@@ -141,6 +148,20 @@ root.getChildren().remove(filmAjoute);
                 film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateur().getText());
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
+                System.out.println(cheminEditImage);
+
+
+                String cheminValide;
+
+                System.out.println(cheminEditImage);
+                System.out.println("film.getimagefilm" + film1.getImageFilm());
+
+                if (viewHandler.getViewAjoutFilm().getCheminFIchier() == null){
+
+                    cheminValide = cheminEditImage;
+                }else{
+                    cheminValide = film1.getImageFilm();
+                }
 
 
                 String requete = "UPDATE dvdtheque.Film SET Nom_Film = '"+
@@ -148,7 +169,7 @@ root.getChildren().remove(filmAjoute);
                         "', Annee_Film = "+ film1.getAnneeFilm() +
                         ", Note_Film = "+ film1.getNoteFilm() +
                         ", Resume_Film = '"+ film1.getResumeFilm() +
-                        "', Image_Film = '"+ film1.getImageFilm() +
+                        "', Image_Film = '"+ cheminValide +
                         "', Realisateur_id = "+ film1.getRealisateurFilm() +
                         ", Nationnalite_id= "+ film1.getNationaliteFilm() +
                         " WHERE Nom_Film = '" +tabListFilm.get(numeroAModif).get(1)+ "';";
@@ -207,6 +228,11 @@ root.getChildren().remove(filmAjoute);
 
         }
 
+
+
+
+
+
         if (mouseEvent.getSource().equals(viewHandler.getViewDemarrage().getButtonDemarer())) {
 
             viewHandler.afficherViewList(film1, tabListFilm);
@@ -227,7 +253,47 @@ root.getChildren().remove(filmAjoute);
         }
 
 
-        for (int i = 0; i < sizeTab; i++) {
+
+        for (int y = 0; y < sizeTab; y++) {
+
+          if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauDesImages().get(y))) {
+
+
+              int finalY = y;
+              viewHandler.getViewList().getTableauDesImages().get(1).addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+                  @Override
+                  public void handle(MouseEvent event) {
+
+                      viewHandler.getViewList().getTableauDesImages().get(finalY).setFitWidth(500);
+                  }
+              });;
+
+
+                        System.out.println("imageclique");
+
+                        viewHandler.afficherViewFilmDetail();
+
+
+                    }
+
+                }//voici ma fonction qui m'indique une erreur
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                for (int i = 0; i < sizeTab; i++) {
 
             if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnSupprimer().get(i))) {
 
@@ -288,7 +354,8 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getAreaNote().setText("" + tabListFilm.get(i).get(3));
                 viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("" + tabListFilm.get(i).get(4));
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("" + tabListFilm.get(i).get(5));
-                viewHandler.getViewAjoutFilm().initEditZoneImage(tabListFilm.get(i).get(5));
+               cheminEditImage = tabListFilm.get(i).get(5);
+                       viewHandler.getViewAjoutFilm().initEditZoneImage(tabListFilm.get(i).get(5));
                 viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("" + tabListFilm.get(i).get(6));
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("" + tabListFilm.get(i).get(7));
 

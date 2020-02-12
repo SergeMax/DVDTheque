@@ -384,6 +384,10 @@ public class ViewAjoutFilm {
 
     }
 
+    public ChoiceBox<Integer> getChoiceBox() {
+        return choiceBox;
+    }
+
     public void setVueCompleteInscription() {
         root.getChildren().clear();
 

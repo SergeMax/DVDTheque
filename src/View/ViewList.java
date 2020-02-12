@@ -2,6 +2,7 @@ package View;
 
 import Controler.Controler;
 import Model.Film;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -11,6 +12,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -70,6 +72,8 @@ public class ViewList {
     private TextField areaRechercheFilm;
     private Label RechercheFilm;
     private Button buttonValiderRecherche;
+    private ArrayList<ImageView> tableauDesImages = new ArrayList<>();
+    private ArrayList<Button> tableauBtnDetail= new ArrayList<>();
 
     public ArrayList<ArrayList<String>> getTabListFilm() {
         return tabListFilm;
@@ -121,6 +125,10 @@ public class ViewList {
 
         setVueListFilm();
 
+    }
+
+    public ArrayList<ImageView> getTableauDesImages() {
+        return tableauDesImages;
     }
 
     private void initImageDvd() {
@@ -228,7 +236,8 @@ public class ViewList {
     }
 
     public HBox initVbox(String cheminImage){
-       HboxFilm hboxx = new HboxFilm(cheminImage);
+        ImageView img = new ImageView();
+       HboxFilm hboxx = new HboxFilm(cheminImage, img);
         HBox hboxConstruite = hboxx.gethBox();
 
         return hboxConstruite;
@@ -280,10 +289,15 @@ public class ViewList {
         genreT.setFont(Font.font("Amble CN", BOLD, 20));
 
 
-        HboxFilm boxFilm = new HboxFilm(chemin);
+        ImageView img = new ImageView();
+        HboxFilm boxFilm = new HboxFilm(chemin, img);
         HBox hboxConstruite = boxFilm.gethBox();
 
 
+
+
+
+        tableauDesImages.add(img);
 
 
         Font fontTitre = new Font("Sans Serif", 10 );
@@ -292,16 +306,41 @@ public class ViewList {
         Button buttonEditer = new Button();
         buttonEditer.setText("Editer");
         buttonEditer.setTranslateX(460);
-        buttonEditer.setTranslateY(5);
+        buttonEditer.setTranslateY(35);
         tableauBtnEditer.add(buttonEditer);
 
 
         Button buttonSupprimer = new Button();
         buttonSupprimer.setText("Supprimer");
         buttonSupprimer.setTranslateX(520);
-        buttonSupprimer.setTranslateY(-20);
+        buttonSupprimer.setTranslateY(10);
 
         tableauBtnSupprimer.add(buttonSupprimer);
+
+
+        Button buttonDetail= new Button();
+
+
+
+
+
+        ImageView imgPlay = new ImageView("assets/image/play.png");
+        imgPlay.setFitWidth(60);
+        imgPlay.setPreserveRatio(true);
+
+        buttonDetail.setGraphic(imgPlay);
+        buttonDetail.setStyle(
+                "-fx-background-radius: 5em; " +
+                        "-fx-min-width: 43px; " +
+                        "-fx-min-height: 43px; " +
+                        "-fx-max-width: 43px; " +
+                        "-fx-max-height: 43px;");
+        buttonDetail.setTranslateX(00);
+        buttonDetail.setTranslateY(153);
+
+        tableauBtnDetail.add(buttonDetail);
+
+
 
         ImageView play = new ImageView("assets/image/play.png");
 
@@ -331,10 +370,10 @@ public class ViewList {
         colonne1.getChildren().addAll(anneeFilm, anneeFilmT);
 
         VBox colonne2 = new VBox();
-        colonne2.getChildren().addAll(  nomRealisateur, nomRealisateurFilmT);
+        colonne2.getChildren().addAll(nomRealisateur, nomRealisateurFilmT);
 
         VBox colonne3 = new VBox();
-        colonne3.getChildren().addAll(  noteFilm, noteFilmT);
+        colonne3.getChildren().addAll(noteFilm, noteFilmT);
 
 
         VBox vboxGenre = new VBox();
@@ -362,7 +401,7 @@ public class ViewList {
         ligne2.getChildren().addAll(colonne1,colonne2,colonne3);
 
         VBox blocV1DansTeteBloc = new VBox();
-        blocV1DansTeteBloc.getChildren().addAll( nomFilm, nomFilmT, ligne2);
+        blocV1DansTeteBloc.getChildren().addAll( nomFilm, nomFilmT, buttonDetail, ligne2);
         blocV1DansTeteBloc.setMinWidth(380);
 
         HBox teteBloc = new HBox();
@@ -385,7 +424,7 @@ public class ViewList {
 
 
 
-        vboxDescription.getChildren().addAll(teteBloc, resumeFilm, resumeFilmT,  play, buttonEditer, buttonSupprimer);
+        vboxDescription.getChildren().addAll(teteBloc, resumeFilm, resumeFilmT, buttonEditer, buttonSupprimer);
 
         hboxConstruite.getChildren().addAll( vboxDescription);
         hboxConstruite.setMaxHeight(250);
@@ -412,7 +451,9 @@ public class ViewList {
         anneeFilm.setFont(Font.font("Amble CN",15));
     }
 
-
+    public ArrayList<Button> getTableauBtnDetail() {
+        return tableauBtnDetail;
+    }
 
     private void initNoteFilmLabel() {
         noteFilm = new Label("Note");

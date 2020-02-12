@@ -105,13 +105,17 @@ public class ViewFilmDetail {
 
 
     }
+
+
     public void init(){
 
         bdd = new BDDManager();
 
         bdd.start();
 
-        tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Id_film=1;");
+        tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
+
+        tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='"+tabListFilm.get(0).get(1)+"';");
 
         VBox vboxListe = new VBox();
         vboxListe.setSpacing(30);
@@ -163,7 +167,8 @@ public class ViewFilmDetail {
 
     }
     public HBox initVbox(String cheminImage){
-        HboxFilm hboxx = new HboxFilm(cheminImage);
+        ImageView img = new ImageView();
+        HboxFilm hboxx = new HboxFilm(cheminImage, img );
         HBox hboxConstruite = hboxx.gethBox();
 
         return hboxConstruite;
@@ -215,7 +220,11 @@ public class ViewFilmDetail {
         genreT.setFont(Font.font("Amble CN", BOLD, 20));
 
 
-        HboxFilm boxFilm = new HboxFilm(chemin);
+        ImageView imageF = new ImageView();
+        HboxFilm boxFilm = new HboxFilm(chemin, imageF);
+
+        imageF.setFitWidth(200);
+
         HBox hboxConstruite = boxFilm.gethBox();
         hboxConstruite.setPadding(new Insets(100, 100, 100, 100));
 hboxConstruite.setMinWidth(987);
@@ -240,6 +249,7 @@ hboxConstruite.setMinWidth(987);
         tableauBtnSupprimer.add(buttonSupprimer);
 
         ImageView play = new ImageView("assets/image/play.png");
+
 
         play.setFitWidth(70);
         play.setTranslateY(32);
@@ -306,7 +316,7 @@ hboxConstruite.setMinWidth(987);
         VBox vboxDescription = new VBox();
 
 
-        vboxDescription.getChildren().addAll(teteBloc, resumeFilm, resumeFilmT,  play, buttonEditer, buttonSupprimer);
+        vboxDescription.getChildren().addAll(teteBloc, resumeFilm, resumeFilmT,  play);
 
 
         hboxConstruite.getChildren().addAll( vboxDescription);

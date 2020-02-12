@@ -163,8 +163,9 @@ public class ViewHandler extends Application {
 
        // afficherViewList(filmTest, tabListFilm);
 
-        afficherViewDemarrage();
+       afficherViewDemarrage();
 
+       // afficherViewFilmDetail();
 
 
 
