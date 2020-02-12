@@ -8,7 +8,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.BDDManager;
@@ -60,6 +61,10 @@ public class ViewHandler extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
+
+
+
+
        primaryStage.setTitle("DVD Theque Super Sonic");
 
 
@@ -73,7 +78,10 @@ public class ViewHandler extends Application {
         rootVueDemmarage.minHeight(1000);
         rootVueDemmarage.maxHeight(1000);
 
-
+        rootVueList.setStyle("-fx-background-image: url('/assets/image/pho.png'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch;" +
+                "-fx-background-size: cover;");
 
 
 
@@ -84,6 +92,10 @@ public class ViewHandler extends Application {
         root.setMinHeight(900);
 
         root.setMaxHeight(900);
+        root.setStyle("-fx-background-image: url('/assets/image/pho.png'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch;" +
+                "-fx-background-size: cover;");
 
         rootVueList.setPadding(new Insets(50, 150, 50, 150));
         rootVueList.setSpacing(10);
@@ -102,6 +114,11 @@ public class ViewHandler extends Application {
         rootVueFilmDetail.setMinHeight(900);
 
         rootVueFilmDetail.setMaxHeight(900);
+
+        rootVueFilmDetail.setStyle("-fx-background-image: url('/assets/image/pho.png'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch;" +
+                "-fx-background-size: cover;");
 
 
 
@@ -166,9 +183,6 @@ public class ViewHandler extends Application {
        afficherViewDemarrage();
 
        // afficherViewFilmDetail();
-
-
-
 
        // primaryStage.setScene(demarage);
         primaryStage.setResizable(true);

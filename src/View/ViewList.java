@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -168,6 +169,10 @@ public class ViewList {
 
     public void init(){
 
+
+//then you set to your node
+
+
         bdd = new BDDManager();
 
         bdd.start();
@@ -182,6 +187,8 @@ public class ViewList {
 
         VBox vboxListe = new VBox();
         vboxListe.setSpacing(20);
+
+
 
         tableauBtnSupprimer.clear();
         tableauBtnEditer.clear();
@@ -226,6 +233,7 @@ public class ViewList {
         scroll.setContent(null);
 
         scroll.setContent(vboxListe);
+
 
         setVueListFilm();
         //root.getChildren().clear();

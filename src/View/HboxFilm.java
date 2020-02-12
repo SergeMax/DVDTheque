@@ -17,7 +17,7 @@ public class HboxFilm {
     private ImageView imageFilm;
     private HBox hBox;
     private ImageView imageViewBack;
-    private final Background focusBackground = new Background( new BackgroundFill( Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY ) );
+    private final Background focusBackground = new Background( new BackgroundFill( Color.MINTCREAM, CornerRadii.EMPTY, Insets.EMPTY ) );
     private ArrayList<Integer> listeId = new ArrayList<>();
 
 

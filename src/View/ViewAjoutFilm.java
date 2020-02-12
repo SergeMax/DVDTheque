@@ -291,7 +291,6 @@ public class ViewAjoutFilm {
             root.getChildren().remove(areaNationalite);
 
 
-
             root.getChildren().remove(buttonValider);
             root.getChildren().remove(buttonRetourListe);
 
