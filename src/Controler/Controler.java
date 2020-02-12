@@ -119,9 +119,11 @@ public class Controler implements EventHandler<MouseEvent> {
 
                 Boolean succes = bdd.edit(requete);
 
-                viewHandler.afficherViewList(film1, tabListFilm);
 
+               // viewHandler.afficherViewList(film1, tabListFilm);
                 viewHandler.afficherAjoutFilm();
+
+
                 //   root.getChildren().add(filmAjoute);
                 sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 

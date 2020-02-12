@@ -73,6 +73,10 @@ public class ViewAjoutFilm {
 
     private String cheminFIchier;
 
+    public void setImagePrev(ImageView imagePrev) {
+        this.imagePrev = imagePrev;
+    }
+
     public Label getTitreFormulaire() {
         return titreFormulaire;
     }
@@ -237,6 +241,7 @@ public class ViewAjoutFilm {
         imageBox.getChildren().addAll(areaImageFilm);
         areaImageFilm.setMinWidth(100);
 
+
         areaImageFilm.setOnMouseClicked((e) -> {
 
 
@@ -304,6 +309,7 @@ public class ViewAjoutFilm {
 
 
             root.getChildren().add(buttonValider);
+            root.getChildren().add(buttonRetourListe);
         });
         // areaImageFilm.setMinWidth(120);
     }
@@ -467,5 +473,9 @@ public class ViewAjoutFilm {
 
     public Button getButtonRetourListe() {
         return buttonRetourListe;
+    }
+
+    public HBox getImageBox() {
+        return imageBox;
     }
 }
