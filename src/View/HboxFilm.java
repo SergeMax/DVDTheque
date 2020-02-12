@@ -27,9 +27,10 @@ public class HboxFilm {
         //System.out.println(image);
         imageFilm = new ImageView(image);
 
-        imageFilm.setFitWidth(200);
+        imageFilm.setFitHeight(300);
         imageFilm.setTranslateY(2);
         imageFilm.setPreserveRatio(true);
+
 
         imageFilm.setOnMouseClicked(e->{
 
