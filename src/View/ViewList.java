@@ -128,6 +128,8 @@ public class ViewList {
         imageDvd.setPreserveRatio(true);
         imageDvd.setFitHeight(50);
         imageDvd.setTranslateX(420);
+        imageDvd.setTranslateY(30);
+
 
 
     }
@@ -236,7 +238,9 @@ public class ViewList {
         buttonAjouterFilm = new Button();
         buttonAjouterFilm.setText("Ajouter Film");
         buttonAjouterFilm.setTranslateX(830);
-      //  buttonAjouterFilm.setTranslateY();
+        buttonAjouterFilm.setTranslateY(90);
+
+        //  buttonAjouterFilm.setTranslateY();
 
     }
 
@@ -441,6 +445,8 @@ public class ViewList {
         titrePage = new Label("Liste des Films");
         titrePage.setFont(Font.font("Amble CN", BOLD, 30));
         titrePage.setTranslateX(-30);
+        titrePage.setTranslateY(30);
+
     }
 
 

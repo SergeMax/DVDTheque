@@ -1,6 +1,8 @@
 package View;
 
 import Controler.Controler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -61,6 +63,9 @@ public class ViewAjoutFilm {
     private FileChooser directoryRef;
     private HBox imageBox;
     private ImageView imagePrev = null;
+    private FlowPane flowpan;
+    private Label label;
+    private ChoiceBox<Integer> choiceBox;
 
     public String getCheminFIchier() {
         return cheminFIchier;
@@ -190,13 +195,32 @@ public class ViewAjoutFilm {
         areaNote = new TextField("");
         areaNote.setMinWidth(120);
 
+
+        Integer note1 = 1;
+        Integer note2 =2;
+        Integer note3 = 3;
+        Integer note4 = 4;
+        Integer note5 =5;
+
+
+
+       label = new Label("Note du film :");
+
+        ObservableList<Integer> listeNote //
+                = FXCollections.observableArrayList(note1, note2, note3, note4, note5);
+
+       choiceBox = new ChoiceBox<Integer>(listeNote);
+
+
+
     }
 
     private void initAreaResumeFilm() {
         areaResumeFilm = new TextArea("");
 
         areaResumeFilm.setMinWidth(120);
-        areaResumeFilm.setMinHeight(130);
+        areaResumeFilm.setMinHeight(80);
+        areaResumeFilm.setMaxHeight(80);
 
 
     }
@@ -220,7 +244,7 @@ public class ViewAjoutFilm {
 
             directoryRef = new FileChooser();
 
-            directoryRef.setInitialDirectory(new File("C:/Projet Java/DVDTheque/src/assets/image"));
+            directoryRef.setInitialDirectory(new File("C:/Users/p1900110/DVDTheque3/src/assets/image"));
 
             File file = directoryRef.showOpenDialog(primaryStage);
             cheminFIchier = file.getPath();
@@ -250,11 +274,37 @@ public class ViewAjoutFilm {
             imagePrev.setTranslateX(40);
             imagePrev.setTranslateY(-25);
 
+
+            root.getChildren().remove(imageBox);
+
             imageBox.getChildren().remove(imagePrev);
+
+            root.getChildren().remove(nomRealisateur);
+            root.getChildren().remove(areaRealisateur);
+
+            root.getChildren().remove(nationaliteFilm);
+            root.getChildren().remove(areaNationalite);
+
+
+
+            root.getChildren().remove(buttonValider);
+            root.getChildren().remove(buttonRetourListe);
 
             imageBox.getChildren().addAll(imagePrev);
 
             System.out.println(cheminFIchier);
+            root.getChildren().add(imageBox);
+
+            root.getChildren().add(nomRealisateur);
+            root.getChildren().add(areaRealisateur);
+
+            root.getChildren().add(nationaliteFilm);
+            root.getChildren().add(areaNationalite);
+
+
+
+            root.getChildren().add(buttonValider);
+            root.getChildren().add(buttonRetourListe);
         });
         // areaImageFilm.setMinWidth(120);
     }
@@ -278,6 +328,8 @@ public class ViewAjoutFilm {
         imagePrev.setPreserveRatio(true);
         imagePrev.setTranslateX(40);
         imagePrev.setTranslateY(-25);
+
+        imageBox.getChildren().remove(imagePrev);
 
         imageBox.getChildren().addAll(imagePrev);
 
@@ -345,8 +397,8 @@ public class ViewAjoutFilm {
         root.getChildren().add(anneeFilm);
         root.getChildren().add(areaAnneeFilm);
 
-        root.getChildren().add(noteFilm);
-        root.getChildren().add(areaNote);
+        root.getChildren().addAll(label, choiceBox);
+
 
         root.getChildren().add(resumeFilm);
         root.getChildren().add(areaResumeFilm);

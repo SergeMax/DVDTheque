@@ -91,6 +91,7 @@ public class ViewHandler extends Application {
         rootVueList.setMaxWidth(1200);
         rootVueList.setMaxHeight(900);
         rootVueList.setMinHeight(900);
+        rootVueList.setTranslateY(-30);
 
         rootVueFilmDetail = new VBox();
         rootVueFilmDetail.setPadding(new Insets(50, 150, 0, 100));
