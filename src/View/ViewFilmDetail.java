@@ -106,16 +106,15 @@ public class ViewFilmDetail {
 
     }
 
+    public void setTabListFilm(ArrayList<ArrayList<String>> tabListFilm) {
+        this.tabListFilm = tabListFilm;
+    }
 
     public void init(){
 
         bdd = new BDDManager();
 
         bdd.start();
-
-        tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
-
-        tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='"+tabListFilm.get(0).get(1)+"';");
 
         VBox vboxListe = new VBox();
         vboxListe.setSpacing(30);
@@ -205,7 +204,13 @@ public class ViewFilmDetail {
         for (int i =0; i<tableauBtnSupprimer.size(); i++) {
             tableauBtnEditer.get(i).setOnMouseClicked(ajout);
         }
+        buttonRetourListe.setOnMouseClicked(ajout);
     }
+
+    public Button getButtonRetourListe() {
+        return buttonRetourListe;
+    }
+
     private HBox initBoxFilm(String chemin, ArrayList<ArrayList<String>> tabgenreString){
 
         genreT = new Text("");

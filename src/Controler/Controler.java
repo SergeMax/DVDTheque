@@ -40,6 +40,7 @@ public class Controler implements EventHandler<MouseEvent> {
     private boolean modeModif = false;
     private int numeroAModif;
     private String cheminEditImage;
+    private ArrayList<ArrayList<String>> tabListFilmViewdetail;
 
 
     public ArrayList<ArrayList<String>> getTabListFilm() {
@@ -74,14 +75,14 @@ public class Controler implements EventHandler<MouseEvent> {
 
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderAjoutModif())) {
 
-root.getChildren().remove(filmAjoute);
+            root.getChildren().remove(filmAjoute);
 
             if (modeModif == false) {
 
 
-                    filmAjoute.setText("Erreur verifier votre saisie!!");
-                    filmAjoute.setTranslateY(-24);
-                   // root.getChildren().add(filmAjoute);
+                filmAjoute.setText("Erreur verifier votre saisie!!");
+                filmAjoute.setTranslateY(-24);
+                // root.getChildren().add(filmAjoute);
 
 
                 root.getChildren().add(filmAjoute);
@@ -121,7 +122,7 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.afficherViewList(film1, tabListFilm);
 
                 viewHandler.afficherAjoutFilm();
-             //   root.getChildren().add(filmAjoute);
+                //   root.getChildren().add(filmAjoute);
                 sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
                 if (succes == true) {
@@ -133,9 +134,7 @@ root.getChildren().remove(filmAjoute);
                 }
                 sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
-            }else{
-
-
+            } else {
 
 
                 film1 = new Film();
@@ -156,23 +155,23 @@ root.getChildren().remove(filmAjoute);
                 System.out.println(cheminEditImage);
                 System.out.println("film.getimagefilm" + film1.getImageFilm());
 
-                if (viewHandler.getViewAjoutFilm().getCheminFIchier() == null){
+                if (viewHandler.getViewAjoutFilm().getCheminFIchier() == null) {
 
                     cheminValide = cheminEditImage;
-                }else{
+                } else {
                     cheminValide = film1.getImageFilm();
                 }
 
 
-                String requete = "UPDATE dvdtheque.Film SET Nom_Film = '"+
+                String requete = "UPDATE dvdtheque.Film SET Nom_Film = '" +
                         film1.getNomFilm() +
-                        "', Annee_Film = "+ film1.getAnneeFilm() +
-                        ", Note_Film = "+ film1.getNoteFilm() +
-                        ", Resume_Film = '"+ film1.getResumeFilm() +
-                        "', Image_Film = '"+ cheminValide +
-                        "', Realisateur_id = "+ film1.getRealisateurFilm() +
-                        ", Nationnalite_id= "+ film1.getNationaliteFilm() +
-                        " WHERE Nom_Film = '" +tabListFilm.get(numeroAModif).get(1)+ "';";
+                        "', Annee_Film = " + film1.getAnneeFilm() +
+                        ", Note_Film = " + film1.getNoteFilm() +
+                        ", Resume_Film = '" + film1.getResumeFilm() +
+                        "', Image_Film = '" + cheminValide +
+                        "', Realisateur_id = " + film1.getRealisateurFilm() +
+                        ", Nationnalite_id= " + film1.getNationaliteFilm() +
+                        " WHERE Nom_Film = '" + tabListFilm.get(numeroAModif).get(1) + "';";
 
                 System.out.println(requete);
 
@@ -208,7 +207,7 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("");
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("");
 
-                modeModif= false;
+                modeModif = false;
                 sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
             }
 
@@ -227,10 +226,6 @@ root.getChildren().remove(filmAjoute);
             viewHandler.afficherViewList(film1, tabListFilm);
 
         }
-
-
-
-
 
 
         if (mouseEvent.getSource().equals(viewHandler.getViewDemarrage().getButtonDemarer())) {
@@ -253,47 +248,39 @@ root.getChildren().remove(filmAjoute);
         }
 
 
+        for (int i = 0; i < sizeTab; i++) {
 
-        for (int y = 0; y < sizeTab; y++) {
-
-          if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauDesImages().get(y))) {
-
-
-              int finalY = y;
-              viewHandler.getViewList().getTableauDesImages().get(1).addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-                  @Override
-                  public void handle(MouseEvent event) {
-
-                      viewHandler.getViewList().getTableauDesImages().get(finalY).setFitWidth(500);
-                  }
-              });;
-
-
-                        System.out.println("imageclique");
-
-                        viewHandler.afficherViewFilmDetail();
-
-
-                    }
-
-                }//voici ma fonction qui m'indique une erreur
+            if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnDetail().get(i))) {
 
 
 
+                tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
+
+                tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='"+tabListFilm.get(i).get(1)+"';");
 
 
+                viewHandler.getViewFilmDetail().setTabListFilm(tabListFilmViewdetail);
+
+                viewHandler.afficherViewFilmDetail();
+            }
+        }
 
 
+//        for (int y = 0; y < sizeTab; y++) {
+//
+//              int finalY = y;
+//              viewHandler.getViewList().getTableauDesImages().get(finalY).setOnMouseClicked((e) -> {
+//                  if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauDesImages().get(finalY))) {
+//                  System.out.println("imageclique");
+//                  viewHandler.afficherViewFilmDetail();}
+//              });
+//
 
 
+        //voici ma fonction qui m'indique une erreur
 
 
-
-
-
-
-                for (int i = 0; i < sizeTab; i++) {
+        for (int i = 0; i < sizeTab; i++) {
 
             if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnSupprimer().get(i))) {
 
@@ -335,6 +322,16 @@ root.getChildren().remove(filmAjoute);
 
         }
 
+
+        if (mouseEvent.getSource().equals(viewHandler.getViewFilmDetail().getButtonRetourListe())) {
+
+
+            viewHandler.afficherViewList(film1, tabListFilm);
+
+            System.out.println("beton click");
+        }
+
+
         for (int i = 0; i < sizeTab; i++) {
 
             if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnEditer().get(i))) {
@@ -354,8 +351,8 @@ root.getChildren().remove(filmAjoute);
                 viewHandler.getViewAjoutFilm().getAreaNote().setText("" + tabListFilm.get(i).get(3));
                 viewHandler.getViewAjoutFilm().getAreaResumeFilm().setText("" + tabListFilm.get(i).get(4));
                 viewHandler.getViewAjoutFilm().getAreaImageFilm().setText("" + tabListFilm.get(i).get(5));
-               cheminEditImage = tabListFilm.get(i).get(5);
-                       viewHandler.getViewAjoutFilm().initEditZoneImage(tabListFilm.get(i).get(5));
+                cheminEditImage = tabListFilm.get(i).get(5);
+                viewHandler.getViewAjoutFilm().initEditZoneImage(tabListFilm.get(i).get(5));
                 viewHandler.getViewAjoutFilm().getAreaRealisateur().setText("" + tabListFilm.get(i).get(6));
                 viewHandler.getViewAjoutFilm().getNationaliteFilm().setText("" + tabListFilm.get(i).get(7));
 

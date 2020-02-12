@@ -185,6 +185,8 @@ public class ViewList {
 
         tableauBtnSupprimer.clear();
         tableauBtnEditer.clear();
+        tableauBtnDetail.clear();
+
 
 
         for (int i=0; i<tabListFilm.size(); i++){
@@ -269,6 +271,13 @@ public class ViewList {
             tableauBtnSupprimer.get(i).setOnMouseClicked(ajout);
         }
 
+        for (int i =0; i<tableauDesImages.size(); i++) {
+            tableauDesImages.get(i).setOnMouseClicked(ajout);
+        }
+
+        for (int i =0; i<tableauBtnDetail.size(); i++) {
+            tableauBtnDetail.get(i).setOnMouseClicked(ajout);
+        }
 
         for (int i =0; i<tableauBtnSupprimer.size(); i++) {
             tableauBtnEditer.get(i).setOnMouseClicked(ajout);
@@ -306,14 +315,14 @@ public class ViewList {
         Button buttonEditer = new Button();
         buttonEditer.setText("Editer");
         buttonEditer.setTranslateX(460);
-        buttonEditer.setTranslateY(35);
+        buttonEditer.setTranslateY(55);
         tableauBtnEditer.add(buttonEditer);
 
 
         Button buttonSupprimer = new Button();
         buttonSupprimer.setText("Supprimer");
         buttonSupprimer.setTranslateX(520);
-        buttonSupprimer.setTranslateY(10);
+        buttonSupprimer.setTranslateY(30);
 
         tableauBtnSupprimer.add(buttonSupprimer);
 
@@ -334,9 +343,9 @@ public class ViewList {
                         "-fx-min-width: 43px; " +
                         "-fx-min-height: 43px; " +
                         "-fx-max-width: 43px; " +
-                        "-fx-max-height: 43px;");
+                        "-fx-max-height: 43px; ");
         buttonDetail.setTranslateX(00);
-        buttonDetail.setTranslateY(153);
+        buttonDetail.setTranslateY(173);
 
         tableauBtnDetail.add(buttonDetail);
 

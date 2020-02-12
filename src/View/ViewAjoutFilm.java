@@ -304,7 +304,6 @@ public class ViewAjoutFilm {
 
 
             root.getChildren().add(buttonValider);
-            root.getChildren().add(buttonRetourListe);
         });
         // areaImageFilm.setMinWidth(120);
     }

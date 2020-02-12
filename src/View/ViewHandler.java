@@ -214,7 +214,6 @@ public class ViewHandler extends Application {
     }
     public void afficherViewDemarrage() {
 
-
      //   viewDemarrage.setVueDemmarrage();
 
        primaryStage.setScene(demarage);
