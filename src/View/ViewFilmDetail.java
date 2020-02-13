@@ -50,7 +50,11 @@ public class ViewFilmDetail {
     private ArrayList<ArrayList<String>> tabgenreString;
     private ArrayList<ArrayList<String>> tabListFilm;
 
+    private ArrayList<ArrayList<String>> tabActeur;
+
     private BDDManager bdd;
+    private Text acteurText;
+    private String stringActeur;
 
     public ArrayList<ArrayList<String>> getTabListFilm() {
         return tabListFilm;
@@ -138,10 +142,25 @@ public class ViewFilmDetail {
                     "INNER JOIN DVDTHEQUE.film ON film_genre.Film_id = film.Id_Film " +
                     "Where Nom_Film = '" + tabListFilm.get(i).get(1) + "')");
 
+
+            tabActeur = bdd.ask("SELECT Nom_Acteur, Prenom_Acteur FROM DVDTHEQUE.acteur WHERE Id_Acteur IN (SELECT film_acteur.Acteur_id FROM DVDTHEQUE.acteur INNER JOIN DVDTHEQUE.film_acteur ON acteur.Id_Acteur = film_acteur.Film_id INNER JOIN DVDTHEQUE.film ON film_acteur.Film_id = film.Id_Film Where Nom_Film = '"+ tabListFilm.get(i).get(1)+"')");
+
+            stringActeur ="";
+
+            for (int k =0; k< tabActeur.size(); k++){
+                stringActeur = stringActeur + tabActeur.get(k).get(0)+ " " + tabActeur.get(k).get(1) + ", ";
+            }
+
+
+
+
+            System.out.println(stringActeur);
+
+
             initNomFilm(tabListFilm.get(i).get(1));
             initAnneeFilm(tabListFilm.get(i).get(2));
-            initResumeFilm(tabListFilm.get(i).get(3));
-            initNoteFilm(tabListFilm.get(i).get(4));
+            initResumeFilm(tabListFilm.get(i).get(4));
+            initNoteFilm(tabListFilm.get(i).get(3));
 
             initRealisateurFilm(tabListFilm.get(i).get(6));
             initNationalite(tabListFilm.get(i).get(7));
@@ -245,7 +264,10 @@ public class ViewFilmDetail {
 
         Label acteurLabel = new Label("Acteur :  ");
 
-        Text acteurText = new Text("ACteioioerjoergjpoerkgpoekrg");
+        acteurText = new Text("ACteioioerjoergjpoerkgpoekrg");
+
+        acteurText.setText(stringActeur);
+
         acteurBox.setTranslateY(25);
 
 
@@ -379,20 +401,20 @@ public class ViewFilmDetail {
     }
     private void initAnneeFilm(String s) {
 
-        anneeFilmT = new Text(""+filmAAfficher.getAnneeFilm());
+        anneeFilmT = new Text(s);
     }
     private void initNoteFilm(String s) {
 
-        noteFilmT = new Text(""+filmAAfficher.getNoteFilm());
+        noteFilmT = new Text(s);
     }
     private void initResumeFilm(String s) {
 
-        resumeFilmT = new Text(filmAAfficher.getResumeFilm());
+        resumeFilmT = new Text(s);
         resumeFilmT.setWrappingWidth(600);
     }
     private void initRealisateurFilm(String s) {
 
-        nomRealisateurFilmT = new Text(filmAAfficher.getRealisateurFilm());
+        nomRealisateurFilmT = new Text(s);
     }
     private void initNationalite(String s) {
     }

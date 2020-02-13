@@ -740,8 +740,6 @@ initEditZoneImage(cheminFIchier);
         return choiceBoxNation;
     }
 
-
-
     public Button getButtonValiderNation() {
         return buttonValiderNation;
     }
