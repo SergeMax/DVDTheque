@@ -367,7 +367,6 @@ public class Controler implements EventHandler<MouseEvent> {
 
                 tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='" + tabListFilm.get(i).get(1) + "';");
 
-
                 viewHandler.getViewFilmDetail().setTabListFilm(tabListFilmViewdetail);
 
                 viewHandler.afficherViewFilmDetail();

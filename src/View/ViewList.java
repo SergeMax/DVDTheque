@@ -215,12 +215,27 @@ public class ViewList {
                     "INNER JOIN DVDTHEQUE.film ON film_genre.Film_id = film.Id_Film " +
                     "Where Nom_Film = '" + tabListFilm.get(i).get(1) + "')");
 
+            ArrayList<ArrayList<String>> requeteRealisateur = bdd.ask("SELECT Nom_Realisateur, Prenom_Realisateur  FROM DVDTHEQUE.Realisateur WHERE Id_Realisateur = "+ tabListFilm.get(i).get(6) +";");
+
+            System.out.println(requeteRealisateur);
+
+            ArrayList<String> arrayNomPrenomAuteur = new ArrayList<>();
+
+            for (int l = 0; l < requeteRealisateur.size(); l++) {
+
+                String nomAuteur = requeteRealisateur.get(l).get(0);
+                String prenomAteur = requeteRealisateur.get(l).get(1);
+                String concatene = nomAuteur + " " + prenomAteur;
+                arrayNomPrenomAuteur.add(concatene);
+            }
+
+
             initNomFilm(tabListFilm.get(i).get(1));
             initAnneeFilm(tabListFilm.get(i).get(2));
-            initResumeFilm(tabListFilm.get(i).get(3));
-            initNoteFilm(tabListFilm.get(i).get(4));
+            initResumeFilm(tabListFilm.get(i).get(4));
+            initNoteFilm(tabListFilm.get(i).get(3));
 
-            initRealisateurFilm(tabListFilm.get(i).get(6));
+            initRealisateurFilm(requeteRealisateur.get(0).get(0) + " " + requeteRealisateur.get(0).get(1));
             initNationalite(tabListFilm.get(i).get(7));
 
            // System.out.println(tabListFilm.get(1).get(5));
@@ -521,19 +536,19 @@ public class ViewList {
 
     private void initAnneeFilm(String s) {
 
-            anneeFilmT = new Text(""+filmAAfficher.getAnneeFilm());
+            anneeFilmT = new Text(""+s);
 
     }
 
     private void initNoteFilm(String s) {
 
-        noteFilmT = new Text(""+filmAAfficher.getNoteFilm());
+        noteFilmT = new Text(""+s);
 
     }
 
     private void initResumeFilm(String s) {
 
-            resumeFilmT = new Text(filmAAfficher.getResumeFilm());
+            resumeFilmT = new Text(s);
             resumeFilmT.setWrappingWidth(600);
 
     }
@@ -546,7 +561,7 @@ public class ViewList {
 
     private void initRealisateurFilm(String s) {
 
-            nomRealisateurFilmT = new Text(filmAAfficher.getRealisateurFilm());
+            nomRealisateurFilmT = new Text(s);
 
 
     }

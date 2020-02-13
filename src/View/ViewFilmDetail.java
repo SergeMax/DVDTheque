@@ -130,7 +130,7 @@ public class ViewFilmDetail {
             initRealisateurLabel();
 
             initGenreLabel();
-
+            System.out.println(tabListFilm);
             tabgenreString = bdd.ask("SELECT Libelle_Genre FROM DVDTHEQUE.genre " +
                     "WHERE Id_Genre IN " +
                     "(SELECT film_genre.Genre_id FROM DVDTHEQUE.genre " +

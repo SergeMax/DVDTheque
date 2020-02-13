@@ -372,8 +372,8 @@ public class ViewAjoutFilm {
             initAreaImageFilm();
 
             directoryRef = new FileChooser();
-            directoryRef.setInitialDirectory(new File("C:/Projet Java/DVDTheque/src/assets/image"));
-            //   directoryRef.setInitialDirectory(new File("C:/Users/p1900110/DVDTheque3/src/assets/image"));
+           // directoryRef.setInitialDirectory(new File("C:/Projet Java/DVDTheque/src/assets/image"));
+             directoryRef.setInitialDirectory(new File("C:/Users/p1900110/IdeaProjects/DVDTheque/src/assets/image"));
 
             File file = directoryRef.showOpenDialog(primaryStage);
             cheminFIchier = file.getPath();
