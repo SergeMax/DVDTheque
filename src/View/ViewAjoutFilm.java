@@ -33,38 +33,20 @@ public class ViewAjoutFilm {
     private TextArea areaResumeFilm;
     private Button areaImageFilm;
     private TextField areaRealisateurNom;
-    private TextField ville;
-    private TextField adresseEmail;
-
     private Label nomFilm;
     private Label anneeFilm;
     private Label noteFilm;
     private Label resumeFilm;
     private Label imageFilm;
     private Label nomRealisateur;
-    private Label nation;
-    private Label adresseEmailLabel;
-
-    private final Background focusBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
-
-
-    private String adresseEmail1;
-
-
     private Button buttonValider;
-    private HboxFilm vboxx;
-    private VBox vboxConstruite;
-    private VBox boxFilm;
     private Label nationaliteFilm;
     private TextField areaNationalite;
-    private Text filmAjoute;
     private Button buttonRetourListe;
-    private ImageView imgDvd;
     private ImageView imageDvd;
     private FileChooser directoryRef;
     private HBox imageBox;
     private ImageView imagePrev = null;
-    private FlowPane flowpan;
     private Label label;
     private ChoiceBox<Integer> choiceBox;
     private ComboBox<String> choiceBoxAuteur;
@@ -80,52 +62,25 @@ public class ViewAjoutFilm {
     private TextField areaGenre;
     private Label genre;
     private Button buttonValiderGenre;
-    private ComboBox<String> choiceBoxGenre;
-    private ChoiceBox<String> choiceBoxActeur;
-
-
-    public String getCheminFIchier() {
-        return cheminFIchier;
-    }
-
+    private ComboBox choiceBoxGenre = new ComboBox();
     private String cheminFIchier;
 
-    public void setImagePrev(ImageView imagePrev) {
-        this.imagePrev = imagePrev;
-    }
-
-    public Label getTitreFormulaire() {
-        return titreFormulaire;
-    }
-
-    public void setTitreFormulaire(Label titreFormulaire) {
-        this.titreFormulaire = titreFormulaire;
-    }
 
     public ViewAjoutFilm(Menu model, VBox vb) {
 
         bdd = new BDDManager();
-
         bdd.start();
 
         this.root = vb;
         this.model = model;
 
-
-    init();
+        init();
 
         setVueCompleteAjout();
 
-        //bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('ment', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);");
-
-
-        //  initListeImage();
-        // initVaisseauxCoin();
-        //   setVueCompleteMenu();
-
     }
 
-    public void init(){
+    public void init() {
         initChoiceNationalite();
         initTitreFormulaire();
         initAreaNomFilm();
@@ -167,14 +122,11 @@ public class ViewAjoutFilm {
 
     }
 
-
     private void initImageDvd() {
         imageDvd = new ImageView("assets/image/DVD.png");
         imageDvd.setPreserveRatio(true);
         imageDvd.setFitHeight(50);
         imageDvd.setTranslateX(420);
-
-
     }
 
     private void initNomFilm() {
@@ -185,10 +137,6 @@ public class ViewAjoutFilm {
     private void initAnneeFilm() {
         anneeFilm = new Label("Année Film");
         anneeFilm.setFont(Font.font("Amble CN", 15));
-    }
-
-    public VBox getRoot() {
-        return root;
     }
 
     private void initNoteFilm() {
@@ -240,13 +188,11 @@ public class ViewAjoutFilm {
         areaNote = new TextField("");
         areaNote.setMinWidth(120);
 
-
         Integer note1 = 1;
         Integer note2 = 2;
         Integer note3 = 3;
         Integer note4 = 4;
         Integer note5 = 5;
-
 
         label = new Label("Note du film :");
 
@@ -254,19 +200,14 @@ public class ViewAjoutFilm {
                 = FXCollections.observableArrayList(note1, note2, note3, note4, note5);
 
         choiceBox = new ChoiceBox<Integer>(listeNote);
-
-
     }
 
     public void initChoiceReal() {
 
         bdd2 = new BDDManager();
-
         bdd2.start();
 
         ArrayList<ArrayList<String>> requeteRealisateur = bdd2.ask("SELECT Nom_Realisateur, Prenom_Realisateur  FROM DVDTHEQUE.Realisateur;");
-
-        System.out.println(requeteRealisateur);
 
         ArrayList<String> arrayNomPrenomAuteur = new ArrayList<>();
 
@@ -283,23 +224,16 @@ public class ViewAjoutFilm {
         ObservableList<String> arraySelectAuteur //
                 = FXCollections.observableArrayList(arrayNomPrenomAuteur);
 
-
         ComboBox<String> choiceBox = new ComboBox<>(FXCollections.observableArrayList("item 1", "item 2"));
 
         choiceBoxAuteur = new ComboBox<String>(arraySelectAuteur);
         choiceBoxAuteur.setMinWidth(380);
-      //  choiceBoxAuteur.setContextMenu(25);
-
-
 
     }
-
 
     public void initChoiceNationalite() {
 
         ArrayList<ArrayList<String>> requeteNationalite = bdd.ask("SELECT Libelle_Nationnalite  FROM DVDTHEQUE.Nationnalite;");
-
-        System.out.println(requeteNationalite);
 
         ArrayList<String> arrayNationalite = new ArrayList<>();
 
@@ -308,24 +242,16 @@ public class ViewAjoutFilm {
             arrayNationalite.add(nationalite);
         }
 
-        System.out.println(arrayNationalite);
-
-       // labelRealisateur = new Label("Nationalite");
         ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayNationalite);
 
         choiceBoxNation = new ComboBox<>(arrayNatio);
-
         choiceBoxNation.setMinWidth(380);
-
     }
-
 
     public void initChoiceGenre() {
 
         ArrayList<ArrayList<String>> requeteGenre = bdd.ask("SELECT Libelle_Genre  FROM DVDTHEQUE.Genre;");
-
         System.out.println(requeteGenre);
-
         ArrayList<String> arrayGenre = new ArrayList<>();
 
         for (int l = 0; l < requeteGenre.size(); l++) {
@@ -333,52 +259,21 @@ public class ViewAjoutFilm {
             arrayGenre.add(nationalite);
         }
 
-        System.out.println(arrayGenre +"kkll");
+        System.out.println(arrayGenre + "kkll");
 
-        // labelRealisateur = new Label("Nationalite");
         ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayGenre);
 
-        choiceBoxGenre = new ComboBox<String>(arrayNatio);
+        choiceBoxGenre = new ComboBox(arrayNatio);
 
         choiceBoxGenre.setMinWidth(200);
 
     }
 
-    public void initChoiceActeur() {
-
-        ArrayList<ArrayList<String>> requeteGenre = bdd.ask("SELECT Libelle_Genre  FROM DVDTHEQUE.Genre;");
-
-        System.out.println(requeteGenre);
-
-        ArrayList<String> arrayGenre = new ArrayList<>();
-
-        for (int l = 0; l < requeteGenre.size(); l++) {
-            String nationalite = requeteGenre.get(l).get(0);
-            arrayGenre.add(nationalite);
-        }
-
-        System.out.println(arrayGenre +"kkll");
-
-        // labelRealisateur = new Label("Nationalite");
-        ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayGenre);
-
-        choiceBoxActeur = new ChoiceBox<String>(arrayNatio);
-
-        choiceBoxActeur.setMinWidth(200);
-
-    }
-
-
-
-
     private void initAreaResumeFilm() {
         areaResumeFilm = new TextArea("");
-
         areaResumeFilm.setMinWidth(120);
         areaResumeFilm.setMinHeight(80);
         areaResumeFilm.setMaxHeight(80);
-
-
     }
 
     public ImageView getImagePrev() {
@@ -388,20 +283,17 @@ public class ViewAjoutFilm {
     private void initButtionDirectory() {
 
         imageBox = new HBox();
-
         areaImageFilm = new Button("Chercher l'image.");
         imageBox.getChildren().addAll(areaImageFilm);
         areaImageFilm.setMinWidth(100);
-
-
         areaImageFilm.setOnMouseClicked((e) -> {
 
 
             initAreaImageFilm();
 
             directoryRef = new FileChooser();
-           // directoryRef.setInitialDirectory(new File("C:/Projet Java/DVDTheque/src/assets/image"));
-             directoryRef.setInitialDirectory(new File("C:/Users/p1900110/IdeaProjects/DVDTheque/src/assets/image"));
+            // directoryRef.setInitialDirectory(new File("C:/Projet Java/DVDTheque/src/assets/image"));
+            directoryRef.setInitialDirectory(new File("C:/Users/p1900110/IdeaProjects/DVDTheque/src/assets/image"));
 
             File file = directoryRef.showOpenDialog(primaryStage);
             cheminFIchier = file.getPath();
@@ -428,24 +320,20 @@ public class ViewAjoutFilm {
             }
 
 
-
-
             imagePrev.setFitWidth(60);
             imagePrev.setPreserveRatio(true);
             imagePrev.setTranslateX(40);
             imagePrev.setTranslateY(-25);
 
 
-initEditZoneImage(cheminFIchier);
+            initEditZoneImage(cheminFIchier);
 
 
         });
-        // areaImageFilm.setMinWidth(120);
+
     }
 
     public void initEditZoneImage(String cheminFIchier) {
-        //initAreaImageFilm();
-
         areaImageFilm.setText(cheminFIchier);
 
         Image ne = new Image("" + cheminFIchier);
@@ -465,7 +353,6 @@ initEditZoneImage(cheminFIchier);
         imageBox.getChildren().remove(imagePrev);
 
 
-
         root.getChildren().remove(imageFilm);
         root.getChildren().remove(imageBox);
         root.getChildren().remove(nomRealisateur);
@@ -474,8 +361,6 @@ initEditZoneImage(cheminFIchier);
         root.getChildren().remove(hboxNationalite);
         root.getChildren().remove(buttonValider);
         root.getChildren().remove(buttonRetourListe);
-
-
 
 
         root.getChildren().add(imageFilm);
@@ -488,102 +373,64 @@ initEditZoneImage(cheminFIchier);
         root.getChildren().add(buttonValider);
         root.getChildren().add(buttonRetourListe);
 
-
-
-
-
-
-        System.out.println(cheminFIchier);
-
     }
 
     private void initAreaImageFilm() {
-        //   areaImageFilm = new TextField("deplacer votre image ici");
-        // areaImageFilm.setMinWidth(120);
-
-
-        //  System.out.println(selectedDirectory);
-
     }
 
-    private void initHboxRealisateur(){
+    private void initHboxRealisateur() {
         hboxRealisateur = new HBox();
-
-        hboxRealisateur.getChildren().addAll(choiceBoxAuteur, areaRealisateurNom, areaRealisateurPrenom,  buttonValiderAuteur);
+        hboxRealisateur.getChildren().addAll(choiceBoxAuteur, areaRealisateurNom, areaRealisateurPrenom, buttonValiderAuteur);
         hboxRealisateur.setSpacing(30);
     }
 
-    private void initHboxNationalite(){
+    private void initHboxNationalite() {
         hboxNationalite = new HBox();
-
         hboxNationalite.getChildren().addAll(choiceBoxNation, areaNationalite, buttonValiderNation);
         hboxNationalite.setSpacing(30);
     }
 
-
-    private void initButtonValiderAuteur(){
+    private void initButtonValiderAuteur() {
         buttonValiderAuteur = new Button();
         buttonValiderAuteur.setText("Ajouter un réalisateur");
-
     }
 
-    private void initButtonValiderNation(){
+    private void initButtonValiderNation() {
         buttonValiderNation = new Button();
         buttonValiderNation.setText("Ajouter une nationalité");
 
     }
-    private void initButtonValiderGenre(){
-        buttonValiderGenre= new Button();
+
+    private void initButtonValiderGenre() {
+        buttonValiderGenre = new Button();
         buttonValiderGenre.setText("Ajouter un genre");
 
     }
 
-    public TextField getAreaGenre() {
-        return areaGenre;
-    }
-
-    public Button getButtonValiderGenre() {
-        return buttonValiderGenre;
-    }
-
-    public ComboBox<String> getChoiceBoxGenre() {
-        return choiceBoxGenre;
-    }
-
     private void initAreaRealisateurNom() {
-
         areaRealisateurNom = new TextField("Nom");
         areaRealisateurNom.setMinWidth(100);
-
     }
 
-    private void initHboxAnneGenre(){
+    private void initHboxAnneGenre() {
         hboxAnneeGenre = new HBox();
         hboxAnneeGenre.getChildren().addAll(anneeFilm, areaAnneeFilm, genre, choiceBoxGenre, areaGenre, buttonValiderGenre);
         hboxAnneeGenre.setSpacing(30);
     }
 
     private void initAreaGenre() {
-
         areaGenre = new TextField("Genre");
         areaGenre.setMinWidth(100);
-
     }
 
-
-
     private void initAreaRealisateurPrenom() {
-
         areaRealisateurPrenom = new TextField("Prénom");
         areaRealisateurPrenom.setMinWidth(100);
-
     }
 
     private void initAreaNationalite() {
-
         areaNationalite = new TextField("Nouvelle nationalité");
         areaNationalite.setMinWidth(120);
-
     }
 
     private void initButtonValider() {
@@ -607,39 +454,22 @@ initEditZoneImage(cheminFIchier);
 
     public void setVueCompleteAjout() {
         root.getChildren().clear();
-
         root.getChildren().add(imageDvd);
-
         root.getChildren().add(titreFormulaire);
-
         root.getChildren().add(nomFilm);
         root.getChildren().add(areaNomFilm);
-
         root.getChildren().add(hboxAnneeGenre);
-
-
         root.getChildren().addAll(label, choiceBox);
-
-
         root.getChildren().add(resumeFilm);
         root.getChildren().add(areaResumeFilm);
-
         root.getChildren().add(imageFilm);
         root.getChildren().add(imageBox);
-
-
         root.getChildren().add(nomRealisateur);
-
         root.getChildren().add(hboxRealisateur);
-
         root.getChildren().add(nationaliteFilm);
         root.getChildren().add(hboxNationalite);
-
-
         root.getChildren().add(buttonValider);
         root.getChildren().add(buttonRetourListe);
-
-
     }
 
     public void setEvents(Controler ajout) {
@@ -651,6 +481,13 @@ initEditZoneImage(cheminFIchier);
 
     }
 
+    public TextField getAreaGenre() {
+        return areaGenre;
+    }
+
+    public Button getButtonValiderGenre() {
+        return buttonValiderGenre;
+    }
 
     public Button getButtonValiderAjoutModif() {
         return buttonValider;
@@ -688,52 +525,16 @@ initEditZoneImage(cheminFIchier);
         return buttonRetourListe;
     }
 
-    public HBox getImageBox() {
-        return imageBox;
-    }
-
-    public void setChoiceBox(ChoiceBox<Integer> choiceBox) {
-        this.choiceBox = choiceBox;
-    }
-
     public ComboBox<String> getChoiceBoxAuteur() {
         return choiceBoxAuteur;
-    }
-
-    public void setChoiceBoxAuteur(ComboBox<String> choiceBoxAuteur) {
-        this.choiceBoxAuteur = choiceBoxAuteur;
     }
 
     public Button getButtonValiderAuteur() {
         return buttonValiderAuteur;
     }
 
-    public void setButtonValiderAuteur(Button buttonValiderAuteur) {
-        this.buttonValiderAuteur = buttonValiderAuteur;
-    }
-
     public TextField getAreaRealisateurPrenom() {
         return areaRealisateurPrenom;
-    }
-
-    public void setAreaRealisateurPrenom(TextField areaRealisateurPrenom) {
-        this.areaRealisateurPrenom = areaRealisateurPrenom;
-    }
-
-    public HBox getHboxRealisateur() {
-        return hboxRealisateur;
-    }
-
-    public void setHboxRealisateur(HBox hboxRealisateur) {
-        this.hboxRealisateur = hboxRealisateur;
-    }
-
-    public HBox getHboxNationalite() {
-        return hboxNationalite;
-    }
-
-    public void setHboxNationalite(HBox hboxNationalite) {
-        this.hboxNationalite = hboxNationalite;
     }
 
     public ComboBox<String> getChoiceBoxNation() {
@@ -744,7 +545,17 @@ initEditZoneImage(cheminFIchier);
         return buttonValiderNation;
     }
 
-    public void setButtonValiderNation(Button buttonValiderNation) {
-        this.buttonValiderNation = buttonValiderNation;
+    public Label getTitreFormulaire() {
+        return titreFormulaire;
     }
+
+    public String getCheminFIchier() {
+        return cheminFIchier;
+    }
+
+    public VBox getRoot() {
+        return root;
+    }
+
+
 }

@@ -59,13 +59,7 @@ public class ViewHandler extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
-
-
-
-
        primaryStage.setTitle("DVD Theque Super Sonic");
-
 
         this.primaryStage = primaryStage;
 
@@ -81,8 +75,6 @@ public class ViewHandler extends Application {
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch;" +
                 "-fx-background-size: cover;");
-
-
 
         root.setPadding(new Insets(50, 150, 50, 150));
         root.setSpacing(10);
@@ -119,30 +111,22 @@ public class ViewHandler extends Application {
                 "-fx-background-repeat: stretch;" +
                 "-fx-background-size: cover;");
 
-
-
         ajoutFilm = new Scene(root, Color.WHITE);
         listFilm = new Scene(rootVueList, Color.WHITE);
         demarage = new Scene(rootVueDemmarage, Color.WHITE);
         filmDetail = new Scene(rootVueFilmDetail, Color.WHITE);
 
-
-
         filmTest = new Film();
-
 
         viewList = new ViewList(model, rootVueList, filmTest);
         viewDemarrage = new ViewDemarrage(model, rootVueDemmarage);
         viewFilmDetail = new ViewFilmDetail(model, rootVueFilmDetail, filmTest);
 
-
         viewList.setVueListFilm();
-
 
         model = new Menu();
 
         viewAjoutFilm = new ViewAjoutFilm(model, root);
-
 
         BDDManager bdd = new BDDManager();
 
@@ -155,37 +139,15 @@ public class ViewHandler extends Application {
                 "INNER JOIN DVDTHEQUE.film ON film_genre.Film_id = film.Id_Film " +
                 "Where Nom_Film = 'CInquieme Element')"));
 
-       // bdd.lire("src/sample/BDDFilm.sql");
-
-
         tabListFilmLongueur =  bdd.ask("SELECT * FROM DVDTHEQUE.Film;").size();
 
         tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
 
-     //   System.out.println(tabListFilm);
-        for (int i = 0; i< tabListFilmLongueur-1; i++){
-
-        }
-
         controlerInscr = new Controler(this, model, bdd, root, tabListFilm);
 
-
-       // bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('5eme element', 4444, 5, 'ferofk_elrfkeref', 'assets/image/5elem.png', 1, 1);");
-     //   bdd.edit("INSERT INTO DVDTHEQUE.Film (Nom_Film, Annee_Film, Note_Film, Resume_Film, Image_Film, Realisateur_id, Nationnalite_id) VALUES ('ment', 4444, 5, 'ferofk_elrfkeref', 'assets/image/Kill.png', 1, 1);");
-
-        //bdd.lire("src/sample/BDDFilm.sql");
-
-       // bdd.stop();
-
-       // afficherViewList(filmTest, tabListFilm);
-
-       afficherViewDemarrage();
-
-       // afficherViewFilmDetail();
-
-       // primaryStage.setScene(demarage);
+        afficherViewDemarrage();
         primaryStage.setResizable(true);
-       // primaryStage.setFullScreen(true);
+
         primaryStage.show();
 
 
@@ -195,12 +157,6 @@ public class ViewHandler extends Application {
         return tabListFilm;
     }
 
-
-    private void afficherInscription() {
-        viewAjoutFilm.setVueCompleteAjout();
-        System.out.println("ca passer par la");
-    }
-
     public void setEventHandlerAjoutFilm(Controler ajout) {
         viewAjoutFilm.setEvents(ajout);
         viewDemarrage.setEvents(ajout);
@@ -208,11 +164,9 @@ public class ViewHandler extends Application {
         viewFilmDetail.setEvents(ajout);
     }
 
-
     public ViewAjoutFilm getViewAjoutFilm() {
         return viewAjoutFilm;
     }
-
 
     public void afficherViewList(Film film1, ArrayList<ArrayList<String>> tabListFilm) {
 
@@ -226,33 +180,21 @@ public class ViewHandler extends Application {
 
     }
     public void afficherViewDemarrage() {
-
-     //   viewDemarrage.setVueDemmarrage();
-
        primaryStage.setScene(demarage);
-
     }
 
 
     public void afficherViewFilmDetail() {
 
         viewFilmDetail.init();
-
         viewFilmDetail.setVueListFilm();
-
         setEventHandlerAjoutFilm(controlerInscr);
-
         primaryStage.setScene(filmDetail);
 
     }
 
     public void afficherAjoutFilm() {
 
-       // viewAjoutFilm.initChoiceReal();
-
-       // viewAjoutFilm.setVueCompleteAjout();
-
-        //setEventHandlerAjoutFilm(controlerInscr);
         primaryStage.setScene(ajoutFilm);
 
     }

@@ -82,27 +82,21 @@ public class Controler implements EventHandler<MouseEvent> {
 
             if (modeModif == false) {
 
-
                 filmAjoute.setText("Erreur verifier votre saisie!!");
                 filmAjoute.setTranslateY(-4);
-                // root.getChildren().add(filmAjoute);
-
 
                 root.getChildren().add(filmAjoute);
                 film1 = new Film();
 
                 film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
                 film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
-                //film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
 
                 film1.setNoteFilm(viewHandler.getViewAjoutFilm().getChoiceBox().getSelectionModel().getSelectedIndex());
-
 
                 film1.setResumeFilm(viewHandler.getViewAjoutFilm().getAreaResumeFilm().getText());
                 film1.setImageFilm(viewHandler.getViewAjoutFilm().getCheminFIchier());
                 film1.setRealisateurFilm(viewHandler.getViewAjoutFilm().getAreaRealisateurNom().getText());
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
-
 
                 String nomComplet = viewHandler.getViewAjoutFilm().getChoiceBoxAuteur().getSelectionModel().getSelectedItem();
                         String[] separated = nomComplet.split(" ");
@@ -127,20 +121,10 @@ public class Controler implements EventHandler<MouseEvent> {
                         + requeteNationalitee.get(0).get(0) + ");";
                 System.out.println(requete);
 
-
-                // tabListFilm.add();
-
-                // viewInscription.initTextFilmBienAjoute();
-
-
                 Boolean succes = bdd.edit(requete);
 
-
-                // viewHandler.afficherViewList(film1, tabListFilm);
                 viewHandler.afficherAjoutFilm();
 
-
-                //   root.getChildren().add(filmAjoute);
                 sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
 
                 if (succes == true) {
@@ -154,9 +138,7 @@ public class Controler implements EventHandler<MouseEvent> {
 
             } else {
 
-
                 film1 = new Film();
-
                 film1.setNomFilm(viewHandler.getViewAjoutFilm().getAreaNomFilm().getText());
                 film1.setAnneeFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaAnneeFilm().getText()));
                 film1.setNoteFilm(Integer.parseInt(viewHandler.getViewAjoutFilm().getAreaNote().getText()));
@@ -166,7 +148,6 @@ public class Controler implements EventHandler<MouseEvent> {
                 film1.setNationaliteFilm(viewHandler.getViewAjoutFilm().getNationaliteFilm().getText());
 
                 System.out.println(cheminEditImage);
-
 
                 String cheminValide;
 
@@ -180,7 +161,6 @@ public class Controler implements EventHandler<MouseEvent> {
                     cheminValide = film1.getImageFilm();
                 }
 
-
                 String requete = "UPDATE dvdtheque.Film SET Nom_Film = '" +
                         film1.getNomFilm() +
                         "', Annee_Film = " + film1.getAnneeFilm() +
@@ -193,14 +173,7 @@ public class Controler implements EventHandler<MouseEvent> {
 
                 System.out.println(requete);
 
-
-                // tabListFilm.add();
-
-                // viewInscription.initTextFilmBienAjoute();
-
-
                 Boolean succes = bdd.edit(requete);
-
 
                 viewHandler.getViewAjoutFilm().getAreaNomFilm().setText("");
                 viewHandler.getViewAjoutFilm().getAreaAnneeFilm().setText("");
@@ -232,25 +205,19 @@ public class Controler implements EventHandler<MouseEvent> {
         }
 
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonRetourListe())) {
+
             filmAjoute.setText("");
-
             viewHandler.afficherViewList(film1, tabListFilm);
-
         }
 
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonRetourListe())) {
 
-
             viewHandler.afficherViewList(film1, tabListFilm);
-
         }
-
 
         if (mouseEvent.getSource().equals(viewHandler.getViewDemarrage().getButtonDemarer())) {
 
             viewHandler.afficherViewList(film1, tabListFilm);
-            //  viewHandler.getViewList().setEvents();
-
         }
 
         if (mouseEvent.getSource().equals(viewHandler.getViewList().getButtonAjouterFilm())) {
@@ -272,11 +239,7 @@ public class Controler implements EventHandler<MouseEvent> {
             System.out.println(requete);
 
             Boolean succes = bdd.edit(requete);
-
             ArrayList<ArrayList<String>> requeteRealisateur = bdd.ask("SELECT Nom_Realisateur, Prenom_Realisateur  FROM DVDTHEQUE.Realisateur;");
-
-            System.out.println(requeteRealisateur);
-
             ArrayList<String> arrayNomPrenomAuteur = new ArrayList<>();
 
             for (int l = 0; l < requeteRealisateur.size(); l++) {
@@ -286,9 +249,7 @@ public class Controler implements EventHandler<MouseEvent> {
                 String concatene = nomAuteur + " " + prenomAteur;
                 arrayNomPrenomAuteur.add(concatene);
             }
-            //System.out.println(arrayNomPrenomAuteur);
 
-           // Label labelRealisateur = new Label("Realisateur label:");
             ObservableList<String> arraySelectAuteur //
                     = FXCollections.observableArrayList(arrayNomPrenomAuteur);
 
@@ -300,12 +261,10 @@ public class Controler implements EventHandler<MouseEvent> {
 
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderNation())) {
 
-
             String requete = "INSERT INTO DVDTHEQUE.Nationnalite (Libelle_Nationnalite) " +
                     "VALUES ('" + viewHandler.getViewAjoutFilm().getNationaliteFilm().getText() +"');";
             System.out.println(requete);
             Boolean succes = bdd.edit(requete);
-
 
             ArrayList<ArrayList<String>> requeteNationalite = bdd.ask("SELECT Libelle_Nationnalite  FROM DVDTHEQUE.Nationnalite;");
             System.out.println(requeteNationalite);
@@ -319,7 +278,6 @@ public class Controler implements EventHandler<MouseEvent> {
 
             System.out.println(arrayNationalite);
 
-            // labelRealisateur = new Label("Nationalite");
             ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayNationalite);
 
             viewHandler.getViewAjoutFilm().getChoiceBoxNation().setItems(arrayNatio);
@@ -330,12 +288,10 @@ public class Controler implements EventHandler<MouseEvent> {
         if (mouseEvent.getSource().equals(viewHandler.getViewAjoutFilm().getButtonValiderGenre())) {
 
             System.out.println("ok valider genre entreed");
-
             String requete = "INSERT INTO DVDTHEQUE.Genre (Libelle_Genre) " +
                     "VALUES ('" + viewHandler.getViewAjoutFilm().getAreaGenre().getText() +"');";
             System.out.println(requete);
             Boolean succes = bdd.edit(requete);
-
 
             ArrayList<ArrayList<String>> requeteGenre = bdd.ask("SELECT Libelle_Genre FROM DVDTHEQUE.Genre;");
             System.out.println(requeteGenre);
@@ -349,10 +305,7 @@ public class Controler implements EventHandler<MouseEvent> {
 
             System.out.println(arrayGenre);
 
-            // labelRealisateur = new Label("Nationalite");
             ObservableList<String> arrayGenree = FXCollections.observableArrayList(arrayGenre);
-
-            viewHandler.getViewAjoutFilm().getChoiceBoxGenre().setItems(arrayGenree);
             viewHandler.afficherAjoutFilm();
 
         }
@@ -362,30 +315,12 @@ public class Controler implements EventHandler<MouseEvent> {
 
             if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauBtnDetail().get(i))) {
 
-
                 tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
-
                 tabListFilmViewdetail = bdd.ask("SELECT * FROM DVDTHEQUE.Film where Nom_Film='" + tabListFilm.get(i).get(1) + "';");
-
                 viewHandler.getViewFilmDetail().setTabListFilm(tabListFilmViewdetail);
-
                 viewHandler.afficherViewFilmDetail();
             }
         }
-
-
-//        for (int y = 0; y < sizeTab; y++) {
-//
-//              int finalY = y;
-//              viewHandler.getViewList().getTableauDesImages().get(finalY).setOnMouseClicked((e) -> {
-//                  if (mouseEvent.getSource().equals(viewHandler.getViewList().getTableauDesImages().get(finalY))) {
-//                  System.out.println("imageclique");
-//                  viewHandler.afficherViewFilmDetail();}
-//              });
-//
-
-
-        //voici ma fonction qui m'indique une erreur
 
 
         for (int i = 0; i < sizeTab; i++) {
@@ -400,42 +335,24 @@ public class Controler implements EventHandler<MouseEvent> {
 
                     String titreFilm = viewHandler.getViewList().getTabListFilm().get(i).get(1);
                     viewHandler.getViewList().getTableauBtnSupprimer().remove(i);
-                    //  viewHandler.getViewList().getTablistFilmActu()
-
                     viewHandler.getViewList().getTabListFilm().get(i).get(1);
-                    System.out.println(titreFilm);
                     String requete = "DELETE FROM DVDTHEQUE.Film WHERE Nom_Film ='" + titreFilm + "';";
                     bdd.edit(requete);
-
-
                     tabListFilm = viewHandler.getViewList().getTabListFilm();
-
                     viewHandler.afficherViewList(film1, tabListFilm);
-                    //  viewHandler.getViewList().getTableauBtnSupprimer().get(i).setText("" + i);
-
                     sizeTab = viewHandler.getViewList().getTableauBtnSupprimer().size();
-
-
                 }
-
             }
 
             if (efface == true) {
-
                 efface = false;
                 break;
-
             }
-            //   i = i - 1;
-
         }
 
 
         if (mouseEvent.getSource().equals(viewHandler.getViewFilmDetail().getButtonRetourListe())) {
-
-
             viewHandler.afficherViewList(film1, tabListFilm);
-
             System.out.println("beton click");
         }
 

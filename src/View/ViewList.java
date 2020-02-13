@@ -34,34 +34,20 @@ public class ViewList {
     private final Menu model;
 
     private final ScrollPane scroll;
-    private  VBox vBox;
-    private ViewHandler viewHandler;
-    private Stage primaryStage;
     private VBox root;
     private Label titrePage;
-    private Text login;
-    private PasswordField mdp;
     private Text nomFilmT;
     private Text anneeFilmT;
     private Text resumeFilmT;
-    private Text imageFilmT;
-    private Text nomRealisateurFilm;
-
-    private Controler controler;
-
     private Label nomFilm;
     private Label anneeFilm;
     private Label noteFilm;
     private Label resumeFilm;
     private Label imageFilm;
     private Label nomRealisateur;
-
     private Film filmAAfficher;
     private Text noteFilmT;
     private Text nomRealisateurFilmT;
-    private String cheminCard;
-    private ImageView imageFilmm;
-    private ArrayList<Film> tableauDesFilms = new ArrayList<>();
     private Button buttonAjouterFilm;
     private ImageView imageDvd;
     private ArrayList<Button> tableauBtnSupprimer= new ArrayList<>();
@@ -75,50 +61,28 @@ public class ViewList {
     private Button buttonValiderRecherche;
     private ArrayList<ImageView> tableauDesImages = new ArrayList<>();
     private ArrayList<Button> tableauBtnDetail= new ArrayList<>();
-
-    public ArrayList<ArrayList<String>> getTabListFilm() {
-        return tabListFilm;
-    }
-
-    public ArrayList<Button> getTableauBtnEditer() {
-        return tableauBtnEditer;
-    }
-
-    public void setTableauBtnEditer(ArrayList<Button> tableauBtnEditer) {
-        this.tableauBtnEditer = tableauBtnEditer;
-    }
-
     private ArrayList<ArrayList<String>> tabListFilm;
 
-
     public ViewList(Menu model, VBox vb, Film film1) {
-      //  System.out.println("constructeur liste film ok");
+
         filmAAfficher = new Film();
         this.root = vb;
         this.model = model;
         this.filmAAfficher = film1;
-
-
 
         initTitrePage();
         initImageDvd();
         initareaRechercheFilm();
         initRechercheFilm();
         initbuttonValiderRecherche();
-        //initLogin();
-
-
 
         initButtonAjouterFilm();
-
 
         VBox vboxListe = new VBox();
         vboxListe.maxHeight(600);
         vboxListe.minWidth(950);
 
-
         vboxListe.setSpacing(20);
-
 
         scroll = new ScrollPane();
         scroll.setContent(null);
@@ -128,76 +92,22 @@ public class ViewList {
 
     }
 
-    public ArrayList<ImageView> getTableauDesImages() {
-        return tableauDesImages;
-    }
-
-    private void initImageDvd() {
-        imageDvd = new ImageView("assets/image/DVD.png");
-        imageDvd.setPreserveRatio(true);
-        imageDvd.setFitHeight(50);
-        imageDvd.setTranslateX(420);
-        imageDvd.setTranslateY(30);
-
-
-
-    }
-
-    private  void initareaRechercheFilm() {
-        areaRechercheFilm= new TextField("");
-        areaRechercheFilm.setMaxWidth(650);
-        areaRechercheFilm.setTranslateX(-30);
-        areaRechercheFilm.setTranslateY(50);
-
-    }
-    private void initRechercheFilm() {
-        RechercheFilm = new Label("Recherche :");
-        RechercheFilm.setFont(Font.font("Amble CN", FontWeight.BOLD, 20));
-        RechercheFilm.setTranslateX(-30);
-        RechercheFilm.setTranslateY(-20);
-    }
-    private void initbuttonValiderRecherche() {
-        buttonValiderRecherche = new Button();
-        buttonValiderRecherche.setText("Valider");
-        buttonValiderRecherche.setTranslateX(650);
-        buttonValiderRecherche.setTranslateY(-23);
-    }
-
-   // public ArrayList<ArrayList<String>> getTablistFilmActu(ArrayList<ArrayList<String>> tablistFilmActua){
-   //     return tablistFilmActua;
-    //}
-
     public void init(){
-
-
-//then you set to your node
-
 
         bdd = new BDDManager();
 
         bdd.start();
-        // bdd.lire("src/sample/BDDFilm.sql");
 
-        //  tabListFilmLongueur =  bdd.ask("SELECT * FROM DVDTHEQUE.Film;").size();
-
-
-       tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
-
-      //  getTablistFilmActu(tabListFilm);
+        tabListFilm = bdd.ask("SELECT * FROM DVDTHEQUE.Film;");
 
         VBox vboxListe = new VBox();
         vboxListe.setSpacing(20);
-
-
 
         tableauBtnSupprimer.clear();
         tableauBtnEditer.clear();
         tableauBtnDetail.clear();
 
-
-
         for (int i=0; i<tabListFilm.size(); i++){
-
 
             initNomFilmLabel();
             initAnneeFilmLabel();
@@ -229,16 +139,13 @@ public class ViewList {
                 arrayNomPrenomAuteur.add(concatene);
             }
 
-
             initNomFilm(tabListFilm.get(i).get(1));
             initAnneeFilm(tabListFilm.get(i).get(2));
             initResumeFilm(tabListFilm.get(i).get(4));
             initNoteFilm(tabListFilm.get(i).get(3));
-
             initRealisateurFilm(requeteRealisateur.get(0).get(0) + " " + requeteRealisateur.get(0).get(1));
             initNationalite(tabListFilm.get(i).get(7));
 
-           // System.out.println(tabListFilm.get(1).get(5));
             HBox hbox = initBoxFilm(tabListFilm.get(i).get(5), tabgenreString);
 
             vboxListe.getChildren().add(hbox);
@@ -246,26 +153,41 @@ public class ViewList {
         }
 
         scroll.setContent(null);
-
         scroll.setContent(vboxListe);
-
-
         setVueListFilm();
-        //root.getChildren().clear();
-        //setVueListFilm();
+    }
 
-
+    private void initImageDvd() {
+        imageDvd = new ImageView("assets/image/DVD.png");
+        imageDvd.setPreserveRatio(true);
+        imageDvd.setFitHeight(50);
+        imageDvd.setTranslateX(420);
+        imageDvd.setTranslateY(30);
 
 
 
     }
 
-    public HBox initVbox(String cheminImage){
-        ImageView img = new ImageView();
-       HboxFilm hboxx = new HboxFilm(cheminImage, img);
-        HBox hboxConstruite = hboxx.gethBox();
+    private  void initareaRechercheFilm() {
+        areaRechercheFilm= new TextField("");
+        areaRechercheFilm.setMaxWidth(650);
+        areaRechercheFilm.setTranslateX(-30);
+        areaRechercheFilm.setTranslateY(50);
 
-        return hboxConstruite;
+    }
+
+    private void initRechercheFilm() {
+        RechercheFilm = new Label("Recherche :");
+        RechercheFilm.setFont(Font.font("Amble CN", FontWeight.BOLD, 20));
+        RechercheFilm.setTranslateX(-30);
+        RechercheFilm.setTranslateY(-20);
+    }
+
+    private void initbuttonValiderRecherche() {
+        buttonValiderRecherche = new Button();
+        buttonValiderRecherche.setText("Valider");
+        buttonValiderRecherche.setTranslateX(650);
+        buttonValiderRecherche.setTranslateY(-23);
     }
 
     private void initButtonAjouterFilm() {
@@ -276,14 +198,6 @@ public class ViewList {
 
         //  buttonAjouterFilm.setTranslateY();
 
-    }
-
-    public ArrayList<Button> getTableauBtnSupprimer() {
-        return tableauBtnSupprimer;
-    }
-
-    public Button getButtonAjouterFilm() {
-        return buttonAjouterFilm;
     }
 
     public void setEvents(Controler ajout) {
@@ -316,21 +230,14 @@ public class ViewList {
             phraseGenreTotale += tabgenreString.get(z).get(0) + "\n";
         }
 
-
         genreT.setText(phraseGenreTotale);
         genreT.setFont(Font.font("Amble CN", BOLD, 20));
-
 
         ImageView img = new ImageView();
         HboxFilm boxFilm = new HboxFilm(chemin, img);
         HBox hboxConstruite = boxFilm.gethBox();
 
-
-
-
-
         tableauDesImages.add(img);
-
 
         Font fontTitre = new Font("Sans Serif", 10 );
         Font fontTitreFilm = new Font("Sans Serif", 30 );
@@ -352,10 +259,6 @@ public class ViewList {
 
         Button buttonDetail= new Button();
 
-
-
-
-
         ImageView imgPlay = new ImageView("assets/image/play.png");
         imgPlay.setFitWidth(60);
         imgPlay.setPreserveRatio(true);
@@ -371,8 +274,6 @@ public class ViewList {
         buttonDetail.setTranslateY(173);
 
         tableauBtnDetail.add(buttonDetail);
-
-
 
         ImageView play = new ImageView("assets/image/play.png");
 
@@ -392,8 +293,6 @@ public class ViewList {
 
         nomFilmT.setFont(fontTitreFilm);
 
-
-
         resumeFilm.setTranslateY(0);
         resumeFilmT.setTranslateY(0);
 
@@ -407,24 +306,14 @@ public class ViewList {
         VBox colonne3 = new VBox();
         colonne3.getChildren().addAll(noteFilm, noteFilmT);
 
-
         VBox vboxGenre = new VBox();
         vboxGenre.setPrefHeight(150);
         vboxGenre.setMinHeight(150);
-       // vboxGenre.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-
 
         vboxGenre.setPrefWidth(230);
         vboxGenre.setMaxWidth(230);
-        //vboxGenre.setAlignment();
-        //vboxGenre.setTranslateX(80);
-        //vboxGenre.setTranslateY(-10);
-        //vboxGenre.setLayoutX(200);
+
         VBox.setMargin(vboxGenre, new Insets(0, 0, 0, 100));
-
-
-        // vboxGenre.setTranslateX(330);
-        //vboxGenre.setTranslateY(-60);
 
         HBox ligne2 = new HBox();
 
@@ -437,40 +326,19 @@ public class ViewList {
         blocV1DansTeteBloc.setMinWidth(380);
 
         HBox teteBloc = new HBox();
-       // teteBloc.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
+
         teteBloc.getChildren().addAll( blocV1DansTeteBloc, vboxGenre);
 
-
-
-
-
-
-       // vboxGenre.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
         vboxGenre.setAlignment(Pos.TOP_RIGHT);
-        //vBox.setTranslateY();
-
-
         vboxGenre.getChildren().add(genreT);
 
         VBox vboxDescription = new VBox();
-
-
-
         vboxDescription.getChildren().addAll(teteBloc, resumeFilm, resumeFilmT, buttonEditer, buttonSupprimer);
 
         hboxConstruite.getChildren().addAll( vboxDescription);
         hboxConstruite.setMaxHeight(250);
         hboxConstruite.setPrefHeight(250);
-
-        //, anneeFilmT, noteFilmT, resumeFilmT, imageFilmT, nomRealisateurFilmT););
-
         return hboxConstruite ;
-    }
-
-    private void initImage(){
-        imageFilmm = new ImageView("assets/image/5elem.jpg");
-        imageFilmm.setFitHeight(230);
-        imageFilmm.setFitWidth(150);
     }
 
     private void initNomFilmLabel() {
@@ -512,8 +380,6 @@ public class ViewList {
         genre.setFont(Font.font("Amble CN",15));
     }
 
-
-
     private void initTitrePage() {
         titrePage = new Label("Liste des Films");
         titrePage.setFont(Font.font("Amble CN", BOLD, 30));
@@ -521,14 +387,6 @@ public class ViewList {
         titrePage.setTranslateY(30);
 
     }
-
-
-  //  private void initLogin() {
-  //          login = new Text(filmAAfficher.getNomFilm());
-        //System.out.println("initLogin : " + filmAAfficher.getLogin());
-   // }
-
-
 
     private void initNomFilm(String s) {
             nomFilmT = new Text(s);
@@ -553,12 +411,6 @@ public class ViewList {
 
     }
 
-    private void initImageFilm() {
-
-            imageFilmT = new Text(filmAAfficher.getImageFilm());
-
-    }
-
     private void initRealisateurFilm(String s) {
 
             nomRealisateurFilmT = new Text(s);
@@ -566,47 +418,36 @@ public class ViewList {
 
     }
 
-
-
     private void initNationalite(String s) {
-
-            //adresseEmail = new Text(filmAAfficher.getAdresseEmail());
-
     }
-
-
-
-
-  /*  public void setEvents(Controler inscr) {
-        buttonValider.setOnMouseClicked(inscr);
-
-    }
-*/
-
-
-
-    /*public Button getButtonValider() {
-        return buttonValider;
-    }
-*/
-
 
     public void setVueListFilm() {
 
         root.getChildren().clear();
         root.getChildren().add(imageDvd);
-
         root.getChildren().add(titrePage);
         root.getChildren().add(buttonAjouterFilm);
         root.getChildren().add(areaRechercheFilm);
         root.getChildren().add(RechercheFilm);
-
         root.getChildren().add(buttonValiderRecherche);
-
-
-
-        //root.getChildren().add(vboxListe);
         root.getChildren().add(scroll);
 
     }
+
+    public ArrayList<Button> getTableauBtnSupprimer() {
+        return tableauBtnSupprimer;
+    }
+
+    public Button getButtonAjouterFilm() {
+        return buttonAjouterFilm;
+    }
+
+    public ArrayList<ArrayList<String>> getTabListFilm() {
+        return tabListFilm;
+    }
+
+    public ArrayList<Button> getTableauBtnEditer() {
+        return tableauBtnEditer;
+    }
+
     }
