@@ -67,20 +67,21 @@ public class ViewAjoutFilm {
     private FlowPane flowpan;
     private Label label;
     private ChoiceBox<Integer> choiceBox;
-    private ChoiceBox<String> choiceBoxAuteur;
+    private ComboBox<String> choiceBoxAuteur;
     private Label labelRealisateur;
     private Button buttonValiderAuteur;
     private TextField areaRealisateurPrenom;
     private HBox hboxRealisateur;
     private HBox hboxNationalite;
-    private ChoiceBox<String> choiceBoxNation;
+    private ComboBox<String> choiceBoxNation;
     private Button buttonValiderNation;
     private BDDManager bdd2;
     private HBox hboxAnneeGenre;
     private TextField areaGenre;
     private Label genre;
     private Button buttonValiderGenre;
-    private ChoiceBox<String> choiceBoxGenre;
+    private ComboBox<String> choiceBoxGenre;
+    private ChoiceBox<String> choiceBoxActeur;
 
 
     public String getCheminFIchier() {
@@ -155,8 +156,6 @@ public class ViewAjoutFilm {
         initButtonValider();
         initButtonRetourListe();
         initImageDvd();
-
-
 
         initNomFilm();
 
@@ -284,8 +283,13 @@ public class ViewAjoutFilm {
         ObservableList<String> arraySelectAuteur //
                 = FXCollections.observableArrayList(arrayNomPrenomAuteur);
 
-        choiceBoxAuteur = new ChoiceBox<String>(arraySelectAuteur);
+
+        ComboBox<String> choiceBox = new ComboBox<>(FXCollections.observableArrayList("item 1", "item 2"));
+
+        choiceBoxAuteur = new ComboBox<String>(arraySelectAuteur);
         choiceBoxAuteur.setMinWidth(380);
+      //  choiceBoxAuteur.setContextMenu(25);
+
 
 
     }
@@ -309,7 +313,7 @@ public class ViewAjoutFilm {
        // labelRealisateur = new Label("Nationalite");
         ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayNationalite);
 
-        choiceBoxNation = new ChoiceBox<String>(arrayNatio);
+        choiceBoxNation = new ComboBox<>(arrayNatio);
 
         choiceBoxNation.setMinWidth(380);
 
@@ -334,9 +338,33 @@ public class ViewAjoutFilm {
         // labelRealisateur = new Label("Nationalite");
         ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayGenre);
 
-        choiceBoxGenre = new ChoiceBox<String>(arrayNatio);
+        choiceBoxGenre = new ComboBox<String>(arrayNatio);
 
         choiceBoxGenre.setMinWidth(200);
+
+    }
+
+    public void initChoiceActeur() {
+
+        ArrayList<ArrayList<String>> requeteGenre = bdd.ask("SELECT Libelle_Genre  FROM DVDTHEQUE.Genre;");
+
+        System.out.println(requeteGenre);
+
+        ArrayList<String> arrayGenre = new ArrayList<>();
+
+        for (int l = 0; l < requeteGenre.size(); l++) {
+            String nationalite = requeteGenre.get(l).get(0);
+            arrayGenre.add(nationalite);
+        }
+
+        System.out.println(arrayGenre +"kkll");
+
+        // labelRealisateur = new Label("Nationalite");
+        ObservableList<String> arrayNatio = FXCollections.observableArrayList(arrayGenre);
+
+        choiceBoxActeur = new ChoiceBox<String>(arrayNatio);
+
+        choiceBoxActeur.setMinWidth(200);
 
     }
 
@@ -518,7 +546,7 @@ initEditZoneImage(cheminFIchier);
         return buttonValiderGenre;
     }
 
-    public ChoiceBox<String> getChoiceBoxGenre() {
+    public ComboBox<String> getChoiceBoxGenre() {
         return choiceBoxGenre;
     }
 
@@ -668,11 +696,11 @@ initEditZoneImage(cheminFIchier);
         this.choiceBox = choiceBox;
     }
 
-    public ChoiceBox<String> getChoiceBoxAuteur() {
+    public ComboBox<String> getChoiceBoxAuteur() {
         return choiceBoxAuteur;
     }
 
-    public void setChoiceBoxAuteur(ChoiceBox<String> choiceBoxAuteur) {
+    public void setChoiceBoxAuteur(ComboBox<String> choiceBoxAuteur) {
         this.choiceBoxAuteur = choiceBoxAuteur;
     }
 
@@ -708,13 +736,11 @@ initEditZoneImage(cheminFIchier);
         this.hboxNationalite = hboxNationalite;
     }
 
-    public ChoiceBox<String> getChoiceBoxNation() {
+    public ComboBox<String> getChoiceBoxNation() {
         return choiceBoxNation;
     }
 
-    public void setChoiceBoxNation(ChoiceBox<String> choiceBoxNation) {
-        this.choiceBoxNation = choiceBoxNation;
-    }
+
 
     public Button getButtonValiderNation() {
         return buttonValiderNation;
